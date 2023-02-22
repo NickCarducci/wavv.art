@@ -272,7 +272,7 @@ class Sudo extends React.Component {
           //name: this.state.name
         })
           .then(() =>
-            setDoc(doc(firestore, "phoneNumbers", pn.number), {
+            setDoc(doc(firestore, "phoneNumbers", pn), {
               uid: r.user.uid
             }).catch(standardCatch)
           )
