@@ -263,7 +263,7 @@ class Sudo extends React.Component {
         for (let i = 1; i < c.length + 1; i++) {
           usernameAsArray.push(c.substring(0, i));
         }
-        setDoc(doc(collection(firestore, "users"), r.user.uid), {
+        setDoc(doc(firestore, "users", r.user.uid), {
           under13: this.state.under13,
           usernameAsArray,
           //nameAsArray,
@@ -272,7 +272,7 @@ class Sudo extends React.Component {
           //name: this.state.name
         })
           .then(() =>
-            setDoc(doc(collection(firestore, "phoneNumbers"), pn.number), {
+            setDoc(doc(firestore, "phoneNumbers", pn.number), {
               uid: r.user.uid
             }).catch(standardCatch)
           )
@@ -1017,3 +1017,4 @@ export default Sudo;
       }}*/
 //{...props}/>
 //});
+
