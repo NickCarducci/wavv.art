@@ -96,17 +96,16 @@ class PromptAuth extends React.Component {
       .then((r) => r[0])
       .then(async (r) => {
         //console.log(r);
-        if (!r) return await JSON.parse("{}");
         if (r.constructor === Array) return r;
         if (r) return await JSON.parse(r);
       })
       .then((read) => {
         //console.log(read);
         if (read.constructor === Array) return null; //console.log(k, k.proactiveRefresh.user); //when anonymous, too
-        //const read = JSON.parse(r[0]); //if (k.proactiveRefresh) this.state.adb["remove"](k.uid)  hydrateUser({})
+        //const read = JSON.parse(r[0]); //if (k.proactiveRefresh) this.state.adb["remove"](k.uid)  setFireAuth({})
         /*this.setState({ authe: read.user }, () => {
           //console.log(this.state.authe);
-          this.props.hydrateUser(
+          this.props.setFireAuth(
             Object.keys(this.state.authe).reduce((copy, key) => {
               console.log(copy);
               return this.state.authe[key];
@@ -116,7 +115,7 @@ class PromptAuth extends React.Component {
 
         //const read = r ? k.proactiveRefresh.user : {};
 
-        this.props.hydrateUser((window[this.props.windowKey] = read.user)); //bottle
+        this.props.setFireAuth((window[this.props.windowKey] = read.user)); //bottle
         //console.log(window[this.props.windowKey]);
         //storedAuth.multiFactor = JSON.parse(storedAuth.multiFactor);
         this.props.verbose &&
@@ -135,7 +134,7 @@ class PromptAuth extends React.Component {
       .catch((err) => console.log(err));
   };
   render() {
-    var { verbose, hydrateUser, meAuth } = this.props; //strict promise //return await new Promise((resolve) =>
+    var { verbose, setFireAuth, meAuth } = this.props; //strict promise //return await new Promise((resolve) =>
     const removeanon = () =>
       meAuth &&
       meAuth !== undefined &&
@@ -154,45 +153,43 @@ class PromptAuth extends React.Component {
           this.props.onFinish(); // resolve(meAuth.isAnonymous); if (res)
         })
         .catch(standardCatch); //res.isAnonymous
-    const store = (obj) => {
-      this.state.adb["store"]({
-        ...obj,
-        _id: obj.uid
-      })
-        .then(async (r) => await JSON.parse(r))
-        .then((res) => Object.keys(obj).length > 1 && hydrateUser(res)) //reload,"isStored"
-        .catch(standardCatch); //when anonymous, too
-    };
-    const hoistAuth = (User, force) => {
+    const hoistAuth = (info, force) => {
       //return {  local: (reload, auts) => {
-      const err = !User || Object.keys(User).length === 0;
-      err && hydrateUser({}); //const a = /* err ? { _id: "none" } : */ User; /*meAuth ? meAuth :*/ //auts; //mea
-      var permission = null;
-      console.log("User: ", User);
-      if (User) {
-        if (!User.isAnonymous && !force)
-          permission = window.confirm(
+      const err = !info || Object.keys(info).length === 0;
+      err && setFireAuth({}); //const a = /* err ? { _id: "none" } : */ info; /*meAuth ? meAuth :*/ //auts; //mea
+      var save = null;
+      console.log("info: ", info);
+      if (info) {
+        if (!info.isAnonymous && !force)
+          save = window.confirm(
             (!this.props.meAuth ? "is this a private device? if so, " : "") +
               "can we store your auth data?" +
-              `(${User.displayName},${User.phoneNumber},${User.email})` //mea
+              `(${info.displayName},${info.phoneNumber},${info.email})` //mea
           );
-        if (!permission) {
+        if (save) {
+          verbose &&
+            console.log(
+              "REACT-LOCAL-FIREBASE(storing): " + info.uid + " found"
+            );
+          this.state.adb["store"]({ ...info, _id: info.uid })
+            .then(async (r) => await JSON.parse(r))
+            .then((res) => setFireAuth(res)) //reload,"isStored"
+            .catch(standardCatch); //when anonymous, too
+        } else {
           if (meAuth) {
             const { displayName, phoneNumber, email } = meAuth;
             window.confirm(
               "should we clear the following from your device? " +
-                `(${displayName},${phoneNumber},${email},${meAuth.uid})` //mea
-            ) && store({ _id: meAuth.uid });
+                `(${displayName},${phoneNumber},${email})` //mea
+            ) &&
+              this.state.adb["store"]({ _id: meAuth.uid })
+                .then(async (r) => await JSON.parse(r))
+                .then((res) => {}) //reload,"isStored"
+                .catch(standardCatch); //when anonymous, too
           }
-          hydrateUser(User); //var meAuthstripped = stringAuthObj(mea);console.log(meAuthstripped);
+          setFireAuth(info); //var meAuthstripped = stringAuthObj(mea);console.log(meAuthstripped);
           verbose &&
-            console.log("REACT-LOCAL-FIREBASE(ephemeral): " + User.uid); //+ meAuthstripped.isAnonymous ? "" : "?"
-        } else {
-          verbose &&
-            console.log(
-              "REACT-LOCAL-FIREBASE(storing): " + User.uid + " found"
-            );
-          store({ ...User, _id: User.uid });
+            console.log("REACT-LOCAL-FIREBASE(ephemeral): " + info.uid); //+ meAuthstripped.isAnonymous ? "" : "?"
         }
       }
     };
@@ -213,7 +210,7 @@ class PromptAuth extends React.Component {
               if (!aut) {
                 var answer = window.confirm("login?");
                 if (answer) return this.props.onPromptToLogin();
-                await signInAnonymously(getAuth());
+                //await signInAnonymously(getAuth()).catch(standardCatch);
                 return (
                   verbose &&
                   console.log(
@@ -243,15 +240,14 @@ class PromptAuth extends React.Component {
           ref={this.props.gui} //getUserInfo
           onClick={async () => {
             this.props.onStart();
-            if (!this.state.authStateListening) return init();
-            //if (!meAuth) return init(); // (meAuth.constructor === Object && Object.keys(meAuth).length < 1)
+            if (!meAuth) return init(); // (meAuth.constructor === Object && Object.keys(meAuth).length < 1)
 
             if (meAuth.isAnonymous) {
               console.log(meAuth.uid + " is anonymous"); //hoistAuth(s, false, true);
               return this.props.onPromptToLogin();
             } //return await new Promise((resolve) => resolve("login?"));
             //if (s !== undefined) !s.multiFactor && this.state.adb.deleteKeys(); meAuth.multiFactor = JSON.parse(s.multiFactor);
-            // this.props.hydrateUser(meAuth);
+            // this.props.setFireAuth(meAuth);
             verbose &&
               console.log(
                 `REACT-LOCAL-FIREBASE: ${
@@ -265,18 +261,13 @@ class PromptAuth extends React.Component {
           ref={this.props.ra} //resetAuth
           onClick={() => {
             //this.props.onStart();
-            if (!meAuth || !meAuth.uid)
+            if (!meAuth.uid)
               return console.log(
                 "(react-local-firebase): no loaded meAuth",
                 meAuth
               ); //hoistAuth({}, true, true); //payload, reload, all-but-denied permission
             this.state.adb["remove"](meAuth.uid) //_id
-              .then(async (res) => {
-                meAuth.reload instanceof Function && (await meAuth.reload()); //signOut reset or remove recall
-                window[this.props.windowKey] = await getAuth().currentUser();
-                if (!window[this.props.windowKey]) return hydrateUser({});
-                store(window[this.props.windowKey]);
-              }) //, true, "isStored"))
+              .then((res) => setFireAuth({})) //, true, "isStored"))
               .catch(standardCatch); //when anonymous, too  //if (res) this.props.onFinish(); //res.isAnonymous
           }}
         />
