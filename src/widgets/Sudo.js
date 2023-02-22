@@ -666,13 +666,15 @@ class Sudo extends React.Component {
                 : ""
             }}
           >
-            <span style={{ textDecoration: "underline" }}>
+            <span style={{ textDecoration: "underline", color: "linen" }}>
               thumbprint.us
               <br />
               {this.props.user ? (
                 this.props.user.username
               ) : (
-                <a href="https://hibit.cc">hibit.cc</a>
+                <a style={{ color: "linen" }} href="https://hibit.cc">
+                  hibit.cc
+                </a>
               )}
             </span>
             {space}&nbsp;
