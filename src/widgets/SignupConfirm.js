@@ -1,7 +1,7 @@
 import React from "react";
 //import { Link } from "react-router-dom";
 import Slider from "react-input-slider";
-import "./login.css";
+import "./Login.css";
 
 class SignupConfirm extends React.Component {
   constructor(props) {
