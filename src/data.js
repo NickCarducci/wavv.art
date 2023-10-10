@@ -3789,6 +3789,7 @@ class Data extends React.Component {
       <div>
         <div
           style={{
+            display: "none",
             zIndex: "11",
             position: "fixed"
           }}
@@ -4095,7 +4096,7 @@ class Data extends React.Component {
           resnaps={this.state.resnaps}
           freedocs={this.state.freedocs}
         />
-        <WakeSnapshot
+        {/*<WakeSnapshot
           jailclasses={jailclasses}
           deletedclasses={deletedclasses}
           setJail={(x) => this.setState(x)}
@@ -4107,7 +4108,7 @@ class Data extends React.Component {
           remount={(x, func) => {
             /*clearTimeout(this.freetime[func.id]);
               this.freetime[func.id] = setTimeout(
-                () =>*/
+                () =>* /
             this.setState({
               ...x,
               freedocs: [
@@ -4120,7 +4121,7 @@ class Data extends React.Component {
           alivefors={this.state.alivefors}
           closes={this.state.closes}
           resnaps={this.state.resnaps}
-        />
+        />*/}
         <Folder
           event={this.state.event.concat(this.state.together)}
           entity={this.state.entity}
