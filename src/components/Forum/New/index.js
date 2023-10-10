@@ -258,7 +258,7 @@ class NewForum extends React.Component {
               display: "flex",
               position: "absolute",
               right: "0px",
-              top: "17px",
+              top: "0px",
               width: "56px",
               height: "42px",
               alignItems: "center",
