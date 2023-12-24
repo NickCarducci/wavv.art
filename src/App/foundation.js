@@ -1712,6 +1712,7 @@ class Foundation extends React.Component {
         <div ref={this.globe} />
         <div ref={this.closeSwitchMarker} />
         <Mapbox
+          navigate={this.props.navigate}
           entityEvent={this.props.entityEvent}
           event={this.props.event}
           entity={this.props.entity}
