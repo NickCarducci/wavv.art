@@ -1299,6 +1299,11 @@ class Mapbox extends React.Component {
           <div
             onClick={() => {
               this.setState({ tellMeAll: "" });
+              this.props.navigate(
+                this.props.community
+                  ? this.props.community.message
+                  : this.props.city
+              );
             }}
             style={{
               display: "flex",
