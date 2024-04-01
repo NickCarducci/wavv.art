@@ -27,7 +27,7 @@
     "https-browserify": "1.0.0",
     "joi": "^17.3.0",
     "js-crypto-rsa": "1.0.6",
-    "mapbox-gl": "3.2.0",
+    "mapbox-gl": "2.15.0",
     "node-vibrant": "^3.0.0",
     "os-browserify": "0.3.0",
     "path-browserify": "1.0.1",
