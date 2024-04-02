@@ -1342,8 +1342,8 @@ class Forum extends React.Component {
             this.state.onlyPost === "" ||
             this.state.onlyPost === x.shortId
           ) {*/
-        if (!posts[chainId]) posts[chainId] = [];
         x.chainId = chainId;
+        if (!posts[chainId]) posts[chainId] = [];
         posts[chainId].push(x);
       }
     });
@@ -2929,3 +2929,4 @@ if (!this.props.isProfile) {
   }
 }
  */
+
