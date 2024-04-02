@@ -378,8 +378,10 @@ class ForumPagination extends React.Component {
     if (queryWord !== this.state.lastQueryWord) {
       this.setState({ lastQueryWord: queryWord }, () => {
         this.queryTermTimeout = setTimeout(() => {
-          if (queryWord === "")
+          if (queryWord === "") {
+            console.log(this.props.city);
             return this.props.fetchForum(this.props.city, "new");
+          }
           if (
             this.props.commtype === "bills" &&
             this.props.bills &&
@@ -613,9 +615,9 @@ class ForumPagination extends React.Component {
       {
         done: true,
         queryWord: "",
-        savedProfileComments: [],
-        savedProfilePosts: [],
-        savedForumPosts: [],
+        //savedProfileComments: [],
+        //savedProfilePosts: [],
+        //savedForumPosts: [],
         undo: null,
         last: null
       },
@@ -925,3 +927,4 @@ class ForumPagination extends React.Component {
   }
 }
 export default ForumPagination;
+
