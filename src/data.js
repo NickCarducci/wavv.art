@@ -1748,7 +1748,7 @@ class Data extends React.Component {
             );
 
             if (user) {
-              console.log("again", user);
+              //console.log("again", user);
               // clearInterval(tmt);
               resolve(JSON.stringify(user));
             } else resolve("{}");
@@ -1833,7 +1833,7 @@ class Data extends React.Component {
 
             if (user) {
               //clearInterval(tmt);
-              console.log("user", user);
+              //console.log("user", user);
               resolve(JSON.stringify(user));
             } else resolve("{}");
             //}, 2000);
