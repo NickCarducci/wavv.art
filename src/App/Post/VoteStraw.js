@@ -57,14 +57,14 @@ class VoteStraw extends React.Component {
         authorId: this.props.auth.uid,
         way
       });
-      if (way === true) {
-        return this.handleTrue(candidate);
-      } else if (way === false) {
-        return this.handleFalse(candidate);
-      } else if (way === null) {
-        return this.handleNull(candidate);
-      } else return null;
     }
+    if (way === true) {
+      return this.handleTrue(candidate);
+    } else if (way === false) {
+      return this.handleFalse(candidate);
+    } else if (way === null) {
+      return this.handleNull(candidate);
+    } else return null;
   };
   handleTrue = (candidate) => {
     if (
@@ -122,7 +122,7 @@ class VoteStraw extends React.Component {
         let supports = [];
         querySnapshot.docs.forEach((doc) => {
           q++;
-          if (doc.exists()) {
+          if (doc.exists) {
             var support = doc.data();
             support.id = doc.id;
             supports.push(support);
@@ -163,14 +163,14 @@ class VoteStraw extends React.Component {
       )*/
     );
   };
-  //componentDidMount = () =>
-  //this.props.parent.candidates && this.getCandidates();
+  componentDidMount = () =>
+    this.props.parent.candidates && this.getCandidates();
   render() {
     const { parent, isMember } = this.props;
     if (this.props.community) {
       return (
         <div style={{ display: "flex" }}>
-          {!this.props.closeDrop ? null : this.props.closeFilter ? (
+          {!this.props.closeDrop ? null : this.props.closeFilter && false ? (
             <div
               onClick={() => this.props.setShowing({ closeFilter: false })}
               style={{
@@ -622,15 +622,17 @@ class VoteStraw extends React.Component {
                             <Link
                               to={`/${candidate.username}`}
                               style={{
-                                display: "flex",
+                                display: "block",
                                 position: "relative",
                                 width: "max-content",
                                 maxWidth: "30%",
                                 right: "0px",
-                                fontSize: "25px",
+                                fontSize: "14px",
                                 textDecoration: "none"
                               }}
                             >
+                              {candidate.name}
+                              <br />@{candidate.username}
                               <img
                                 src={
                                   candidate.photoThumbnail
@@ -640,12 +642,12 @@ class VoteStraw extends React.Component {
                                 alt="error"
                                 style={{ height: "40px", width: "40px" }}
                               />
-                              {candidate.name}
-                              <br />@{candidate.username}
                             </Link>
                           </div>
                         </div>
                         <VoteModuleResults
+                          downvotes={"downvotes" + candidate.id}
+                          upvotes={"upvotes" + candidate.id}
                           parent={parent}
                           isElection={true}
                           availableEntities={this.state.availableEntities}
