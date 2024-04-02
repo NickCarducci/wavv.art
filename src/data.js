@@ -1662,7 +1662,7 @@ class Data extends React.Component {
     const { recordedUserNames } = this.state;
     return {
       user: async () => {
-        if (!this.state.users.find((x) => x.id === userId)) {
+        if (!this.state.users.find((x) => x.username === profileUserName)) {
           //if (!recordedUserNames.includes(profileUserName)) {
           this.setState({
             recordedUserNames: [...recordedUserNames, profileUserName]
@@ -1741,7 +1741,7 @@ class Data extends React.Component {
         } else {
           return await new Promise(async (resolve, reject) => {
             !fine && reject(!fine);
-            console.log("again profile", profileUserName);
+            //console.log("again profile", profileUserName);
             //const tmt = setInterval(() => {
             var user = this.state.users.find(
               (x) => x.username === profileUserName
