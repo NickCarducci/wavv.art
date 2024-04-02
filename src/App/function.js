@@ -1332,9 +1332,10 @@ class Function extends React.Component {
           tileChosen={this.props.tileChosen}
           setFoundation={this.props.setFoundation}
           focusSuggest={this.state.focusSuggest}
-          focusSearching={() =>
-            this.setState({ focusSuggest: this.props.forumOpen })
-          }
+          focusSearching={() => {
+            this.props.setFoundation({ forumOpen: true });
+            this.setState({ focusSuggest: this.props.forumOpen });
+          }}
           blurSearching={() =>
             this.setState({ focusSuggest: false, predictions: [] })
           }
