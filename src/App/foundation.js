@@ -1891,6 +1891,34 @@ class Foundation extends React.Component {
           eventTypes={this.eventTypes}
           tileChanger={this.tileChanger}
         />
+        {this.props.auth !== undefined && this.state.forumOpen && (
+          <div
+            style={{
+              position: "relative",
+              margin: "auto",
+              marginBottom: "4px",
+              width: "max-content",
+              borderTopRightRadius: "10px",
+              borderTopLeftRadius: "10px",
+              padding: "16px 4px",
+              backgroundColor: !this.props.backgroundColor
+                ? "rgba(255,255,255,.6)"
+                : "" //this.props.auth!==undefined.sausageadmin
+            }}
+          >
+            <span
+              style={{
+                cursor: "pointer",
+                border: "1px solid",
+                borderRadius: "4px",
+                padding: "10px 4px"
+              }}
+              onClick={() => this.props.logoutofapp()}
+            >
+              logout
+            </span>
+          </div>
+        )}
         <Function
           commtype={this.props.commtype}
           hydrateUserFromUserName={this.props.hydrateUserFromUserName}
