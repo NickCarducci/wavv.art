@@ -556,6 +556,7 @@ class Header extends React.Component {
         <div
           onClick={this.props.eventTypes} //togglePagination
           style={{
+            margin: "10px",
             display: !this.props.forumOpen ? "none" : "flex",
             height: "36px",
             width: "36px",
@@ -857,3 +858,4 @@ export default Header;
           }}
         />
  */
+
