@@ -111,8 +111,8 @@ class VoteModule extends React.Component {
     if (
       auth !== undefined &&
       user !== undefined &&
-      notExpired &&
-      (await this.canIVote(true))
+      notExpired
+      //(await this.canIVote(true))
     ) {
       //vote event ok
 
@@ -147,8 +147,9 @@ class VoteModule extends React.Component {
             //reference:
             //parent.budgetType + "/" + parent.message + "/" + parent.body,
             postId: parent.id,
-            authorId: user.publicAuthorId ? this.props.auth.uid : false,
-            magicVoterId: abstractAuthorId,
+            //authorId: user.publicAuthorId ? this.props.auth.uid : false,
+            authorId: this.props.auth.uid,
+            //magicVoterId: abstractAuthorId,
             party: user.party ? user.party : "",
             experiences: user.experiences ? user.experiences : [],
             education: user.education ? user.education : [],
@@ -285,6 +286,7 @@ class VoteModule extends React.Component {
     this.canIVote();
   };
   canIVote = async (registerIfNot) => {
+    return this.setState({ abstractAuthorId: this.props.auth.uid });
     /*if (this.props.user.party) {
       const partyList = politicalParties.map(
         (x, i) => `${x}${i !== politicalParties.length && ", "}`
@@ -509,6 +511,8 @@ class VoteModule extends React.Component {
               }}
             >
               <VoteModuleResults
+                downvotes={"downvotes"}
+                upvotes={"upvotes"}
                 parent={parent}
                 closeFilter={this.props.closeFilter}
                 setShowing={this.props.setShowing}
@@ -678,3 +682,4 @@ class VoteModule extends React.Component {
   }
 }
 export default VoteModule;
+
