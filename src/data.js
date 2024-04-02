@@ -1662,7 +1662,8 @@ class Data extends React.Component {
     const { recordedUserNames } = this.state;
     return {
       user: async () => {
-        if (!recordedUserNames.includes(profileUserName)) {
+        if (!this.state.users.find((x) => x.id === userId)) {
+          //if (!recordedUserNames.includes(profileUserName)) {
           this.setState({
             recordedUserNames: [...recordedUserNames, profileUserName]
           });
@@ -1767,7 +1768,8 @@ class Data extends React.Component {
     return {
       user: async () => {
         if (!userId) return null;
-        if (!recordedUsers.includes(userId)) {
+        if (!this.state.users.find((x) => x.id === userId)) {
+          //if (!recordedUsers.includes(userId)) {
           this.setState({
             recordedUsers: [...recordedUsers, userId]
           });
@@ -1831,6 +1833,7 @@ class Data extends React.Component {
 
             if (user) {
               //clearInterval(tmt);
+              console.log("user", user);
               resolve(JSON.stringify(user));
             } else resolve("{}");
             //}, 2000);
