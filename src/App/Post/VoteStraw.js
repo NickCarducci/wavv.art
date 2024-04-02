@@ -625,7 +625,7 @@ class VoteStraw extends React.Component {
                                 display: "block",
                                 position: "relative",
                                 width: "max-content",
-                                maxWidth: "30%",
+                                maxWidth: "35px",
                                 right: "0px",
                                 fontSize: "14px",
                                 textDecoration: "none"
@@ -633,6 +633,7 @@ class VoteStraw extends React.Component {
                             >
                               {candidate.name}
                               <br />@{candidate.username}
+                              <br />
                               <img
                                 src={
                                   candidate.photoThumbnail
@@ -748,7 +749,7 @@ class VoteStraw extends React.Component {
                                 padding: "0px 30px"
                               }}
                             >
-                              Request membership to vote
+                              Request membership to vote or submit candidacy
                             </Link>
                           )
                         ) : (
@@ -765,7 +766,7 @@ class VoteStraw extends React.Component {
                             onClick={this.props.getUserInfo}
                             //to="/login"
                           >
-                            must login to vote
+                            must login to vote or submit candidacy
                           </div>
                         )}
                       </div>
@@ -789,7 +790,7 @@ class VoteStraw extends React.Component {
                       onClick={this.props.getUserInfo}
                       //to="/login"
                     >
-                      must login to vote
+                      must login to vote or submit candidacy
                     </div>
                   )}
                 </div>
