@@ -4,9 +4,17 @@ import firebase from "../.././init-firebase";
 import LocOpen from ".././TV/LocOpen";
 import ".././SwitchCity/CitiesMap.css";
 import { reserveWords, individualTypes } from "./arraystrings";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where
+} from "firebase/firestore";
 import { arrayMessage } from "../Post/Media/EditTitle";
 import { specialFormatting } from "../../widgets/Sudo";
+const firestore = getFirestore(firebase);
 const pagesNamesTaken = [
   "newevent",
   "newclub",
@@ -128,12 +136,7 @@ class BuyCommunity extends React.Component {
         <form
           className="buyerthestuff"
           style={{
-            left: "10px",
-            bottom: "10px",
-            maxWidth: "600px",
-            maxHeight: "900px",
-            width: "calc(100% - 20px)",
-            height: "calc(100% - 20px)",
+            top: "0px",
             display: "flex",
             position: "absolute",
             flexDirection: "column",
@@ -187,7 +190,11 @@ class BuyCommunity extends React.Component {
                           predictions.map((x) =>
                             listPlaceNames.push(x.place_name)
                           );
-                          if (listPlaceNames.includes(b)) {
+                          if (
+                            listPlaceNames.includes(b) &&
+                            this.props.auth.uid !==
+                              "3LDLHREHS5VzVnMaGkYctVQhzGi1"
+                          ) {
                             console.log(b + " already there, as a mapbox city");
 
                             var answer = window.confirm("Are you town clerk?");
@@ -205,6 +212,11 @@ class BuyCommunity extends React.Component {
                               () => {
                                 console.log(b + " is being made");
 
+                                var array = [];
+                                const c = b; //.toLowerCase();
+                                for (let i = 1; i < c.length + 1; i++) {
+                                  array.push(c.substring(0, i));
+                                }
                                 addDoc(collection(firestore, "communities"), {
                                   isCommunity: true,
                                   tract: this.state.tract,
@@ -224,7 +236,7 @@ class BuyCommunity extends React.Component {
                                   members: [],
                                   message: b,
                                   messageLower: b.toLowerCase(),
-                                  messageAsArray: arrayMessage(b),
+                                  messageAsArray: array,
                                   body: this.state.body
                                 }).then(() => {
                                   this.props.closeBuyer();
