@@ -833,7 +833,7 @@ class BuyCommunity extends React.Component {
           choosePrediction={(prediction) =>
             this.setState({
               place_name: prediction.place_name,
-              center: [prediction.center[1], prediction.center[0]],
+              center: prediction.center,
               locOpen: false
             })
           }
