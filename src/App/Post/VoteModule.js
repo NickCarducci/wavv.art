@@ -335,25 +335,19 @@ class VoteModule extends React.Component {
   };
   render() {
     const { parent, isMember, user } = this.props;
-    const { abstractAuthorId } = this.state;
 
     var downvoted, upvoted;
-    if (
-      (user !== undefined &&
-        user.publicAuthorId &&
-        this.props.auth !== undefined) ||
-      abstractAuthorId
-    ) {
+    if (user !== undefined && this.props.auth !== undefined) {
       downvoted =
         parent.downvotes &&
         parent.downvotes.length > 0 &&
-        (parent.downvotes.includes(this.props.auth.uid) ||
-          parent.downvotes.includes(abstractAuthorId));
+        parent.downvotes.includes(this.props.auth.uid);
+      //parent.downvotes.includes(abstractAuthorId));
       upvoted =
         parent.upvotes &&
         parent.upvotes.length > 0 &&
-        (parent.upvotes.includes(this.props.auth.uid) ||
-          parent.upvotes.includes(abstractAuthorId));
+        parent.upvotes.includes(this.props.auth.uid);
+      //parent.upvotes.includes(abstractAuthorId));
     }
     var downvotesNumber = parent.downvotes ? parent.downvotes.length : 0;
     var upvotesNumber = parent.upvotes ? parent.upvotes.length : 0;
@@ -682,4 +676,5 @@ class VoteModule extends React.Component {
   }
 }
 export default VoteModule;
+
 
