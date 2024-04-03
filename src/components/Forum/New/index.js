@@ -118,7 +118,7 @@ class NewForum extends React.Component {
           >
             {community ? community.message : this.props.city}
           </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "none", alignItems: "center" }}>
             {this.props.user === undefined ? (
               <div
                 onClick={this.props.getUserInfo}
