@@ -771,7 +771,12 @@ class Function extends React.Component {
                             {
                               predictions: [
                                 ...communitiesFound,
-                                ...body.features
+                                ...body.features.filter(
+                                  (x) =>
+                                    !communitiesFound.find(
+                                      (y) => y.message === x.place_name
+                                    )
+                                )
                               ],
                               lastPredictions: body.features
                             },
@@ -1079,6 +1084,7 @@ class Function extends React.Component {
       (isLoggedAndInComm &&
         community.admin &&
         community.admin.includes(auth.uid));
+    //console.log("isAdmin", community);
     var isFaculty =
       isLoggedAndInComm &&
       community.faculty &&
