@@ -2092,8 +2092,10 @@ class Forum extends React.Component {
             </div>
           </div>
         )}
-        {ownerOpen && <SearchSettings community={community} />}
-        {/*ownerOpen && (
+        {
+          //ownerOpen && <SearchSettings community={community} />
+        }
+        {ownerOpen && (
           <Addadmin
             editingSomeText={this.state.editingSomeText}
             columncount={columncount}
@@ -2109,7 +2111,7 @@ class Forum extends React.Component {
             resetUsers={() => this.handleUserSources(this.state.usersInitial)}
           />
         )}
-        {editingEnabled &&
+        {/*editingEnabled &&
           this.props.editingCommunity &&
           (isAdmin || canMember) && (
             <Addmembers
@@ -2203,7 +2205,7 @@ class Forum extends React.Component {
               community={community}
               auth={auth}
             />
-          )}
+          )*/}
         {!this.props.globeChosen &&
           !subForum &&
           isAdmin &&
@@ -2222,7 +2224,7 @@ class Forum extends React.Component {
               community={community}
               auth={auth}
             />
-          )*/}
+          )}
         {/*!this.props.globeChosen &&
           !subForum &&
           isAdmin &&
