@@ -1107,8 +1107,6 @@ class Function extends React.Component {
     var ownerOpen =
       !this.props.globeChosen &&
       !subForum &&
-      users &&
-      commtype === "new" &&
       this.props.editingCommunity &&
       isAdminOrFaculty;
     /*var communitiesThatPartOf =
