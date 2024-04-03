@@ -352,7 +352,7 @@ class NewForum extends React.Component {
                 "class",
                 "case"
               ].includes(x) ||
-              auth("faculty") ||
+              (auth("faculty") && ["class", "department"].includes(x)) ||
               auth("admin") ||
               this.props.auth.uid === this.props.community.authorId
             ) {
