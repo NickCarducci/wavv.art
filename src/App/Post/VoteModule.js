@@ -283,7 +283,7 @@ class VoteModule extends React.Component {
     //the content-addressable auth is used for impotentcy
   };
   componentDidMount = () => {
-    this.canIVote();
+    this.props.auth !== undefined && this.canIVote();
   };
   canIVote = async (registerIfNot) => {
     return this.setState({ abstractAuthorId: this.props.auth.uid });
@@ -676,5 +676,4 @@ class VoteModule extends React.Component {
   }
 }
 export default VoteModule;
-
 
