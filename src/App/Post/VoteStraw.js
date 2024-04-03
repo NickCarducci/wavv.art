@@ -144,10 +144,11 @@ class VoteStraw extends React.Component {
     let candidates = [];
     let q = 0;
     console.log("candidates", this.props.parent.candidates);
-    this.props.parent.candidates.map(
-      (candidateId) => this.getVotesForEachCandidate(candidateId)
+    this.props.auth !== undefined &&
+      this.props.parent.candidates.map(
+        (candidateId) => this.getVotesForEachCandidate(candidateId)
 
-      /*onSnapshot(
+        /*onSnapshot(
         doc(firestore, "candidates", candidateId),
         (doc) => {
           q++;
@@ -161,7 +162,7 @@ class VoteStraw extends React.Component {
         },
         (e) => console.log(e.message)
       )*/
-    );
+      );
   };
   componentDidMount = () =>
     this.props.parent.candidates && this.getCandidates();
