@@ -212,7 +212,7 @@ export default class NewPost extends React.Component {
                 : null,
             twitterString: this.state.twitterString,
             communityId: community ? community.id : "",
-            city: this.props.city ? this.props.city : null,
+            city: !community && this.props.city ? this.props.city : null,
             message: this.state.message,
             authorId: this.props.auth.uid,
             entityId: this.props.entityId ? this.props.entityId : null,
