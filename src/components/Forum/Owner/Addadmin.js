@@ -9,6 +9,7 @@ class Addadmin extends React.Component {
   };
   render() {
     const { columncount } = this.props;
+    //console.log(this.props.users);
     return (
       <form
         onSubmit={(e) => e.preventDefault()}
@@ -98,9 +99,10 @@ class Addadmin extends React.Component {
                 flexDirection: "row"
               }}
             >
-              {this.state.userQuery !== "" &&
+              {this.props.userQuery !== "" &&
                 this.props.users &&
                 this.props.users.map((x) => {
+                  //console.log(x);
                   if (
                     this.props.community &&
                     this.props.user.username !== x.username &&
