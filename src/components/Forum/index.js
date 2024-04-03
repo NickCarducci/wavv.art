@@ -582,11 +582,11 @@ class Forum extends React.Component {
     this.setState({ users: [...usersInState, ...usersInitial] });
   };
 
-  queryUsers = (query) => {
+  queryUsers = (q) => {
     onSnapshot(
       query(
         collection(firestore, "users"),
-        where("usernameAsArray", "array-contains", query)
+        where("usernameAsArray", "array-contains", q)
       ),
       (querySnapshot) => {
         let users = [];
@@ -599,11 +599,13 @@ class Forum extends React.Component {
             users.push(foo);
           }
         });
-        if (querySnapshot.docs.length === p && this.state.users !== users) {
+        if (querySnapshot.docs.length === p) {
+          //console.log(users);
+          return this.setState({ users });
           onSnapshot(
             query(
               collection(firestore, "users"),
-              where("nameAsArray", "array-contains", query)
+              where("nameAsArray", "array-contains", q)
             ),
             (querySnapshot) => {
               let users = [];
@@ -699,7 +701,7 @@ class Forum extends React.Component {
     if (this.props.isProfile !== prevProps.isProfile)
       this.setState({ onlyCommunity: "", seeContents: "", opening: "" });
 
-    if (this.props.users !== prevProps.users)
+    if (false && this.props.users !== prevProps.users)
       this.setState(
         {
           users: [
@@ -2103,10 +2105,12 @@ class Forum extends React.Component {
             chosenPostId={this.props.chosenPostId}
             editingCommunity={this.props.editingCommunity}
             user={this.props.user}
-            users={this.props.users}
+            users={this.state.users}
             community={community}
             auth={auth}
-            queryText={(parent) => this.setState(parent)}
+            queryText={(parent) =>
+              this.setState(parent, () => this.queryUsers(this.state.userQuery))
+            }
             userQuery={this.state.userQuery}
             resetUsers={() => this.handleUserSources(this.state.usersInitial)}
           />
@@ -2211,7 +2215,11 @@ class Forum extends React.Component {
           isAdmin &&
           commtype === "forum" && (
             <Addteach
-              queryText={(parent) => this.setState(parent)}
+              queryText={(parent) =>
+                this.setState(parent, () =>
+                  this.queryUsers(this.state.userQuery)
+                )
+              }
               userQuery={this.state.userQuery}
               users={this.state.users}
               resetUsers={() => this.handleUserSources(this.state.usersInitial)}
@@ -2931,4 +2939,3 @@ if (!this.props.isProfile) {
   }
 }
  */
-
