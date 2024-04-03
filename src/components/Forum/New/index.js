@@ -354,7 +354,8 @@ class NewForum extends React.Component {
               ].includes(x) ||
               (auth("faculty") && ["class", "department"].includes(x)) ||
               auth("admin") ||
-              this.props.auth.uid === this.props.community.authorId
+              (this.props.auth !== undefined &&
+                this.props.auth.uid === this.props.community.authorId)
             ) {
               return <option key={x + "new"}>{x}</option>;
             } else return null;
@@ -411,3 +412,4 @@ export default NewForum;
 
     document.body.appendChild(script);
   };*/
+
