@@ -605,13 +605,12 @@ class Find extends React.Component {
           ) : (
             hello.map((x) => {
               var thiscity = null;
-              if (!x.isCommunity) {
-                thiscity =
-                  x.place_name.split(",")[1] &&
-                  stateCity.find((y) =>
-                    x.place_name.split(",")[1].includes(y.name)
-                  );
-              }
+              thiscity =
+                x.place_name.split(",")[1] &&
+                stateCity.find((y) =>
+                  x.place_name.split(",")[1].includes(y.name)
+                );
+
               return (
                 <div
                   onMouseOver={(e) => {
@@ -680,14 +679,13 @@ class Find extends React.Component {
                     }
                   </div>
                   {
-                    !x.isCommunity ? (
-                      <WeatherCitySky
-                        hovering={this.state.showhover === x.id}
-                        city={x.place_name}
-                        forProfile={true}
-                        height={48}
-                      />
-                    ) : /*<City
+                    <WeatherCitySky
+                      hovering={this.state.showhover === x.id}
+                      city={x.place_name}
+                      forProfile={true}
+                      height={48}
+                    />
+                    /*<City
                       key={x.place_name}
                       getUserInfo={this.props.getUserInfo}
                       showThisForm={this.props.showThisForm}
@@ -696,7 +694,7 @@ class Find extends React.Component {
                       auth={this.props.auth}
                       user={this.props.user}
                       findCity={this.props.findCity}
-                    />*/ null
+                    />*/
                     /**
                      * 
                      * 
