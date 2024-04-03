@@ -353,7 +353,8 @@ class NewForum extends React.Component {
                 "case"
               ].includes(x) ||
               auth("faculty") ||
-              auth("admin")
+              auth("admin") ||
+              this.props.auth.uid === this.props.community.authorId
             ) {
               return <option key={x + "new"}>{x}</option>;
             } else return null;
