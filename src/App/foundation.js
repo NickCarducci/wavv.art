@@ -1360,7 +1360,9 @@ class Foundation extends React.Component {
     this.setState({ jobsOpen: false });
   };
   switchCMapOpener = () =>
-    this.setState({ switchCityOpen: true }, () => window.scroll(0, 0));
+    this.setState({ switchCityOpen: !this.state.switchCityOpen }, () =>
+      window.scroll(0, 0)
+    );
 
   switchCMapCloser = () => this.setState({ switchCityOpen: false });
 
@@ -2908,3 +2910,4 @@ export default Foundation;
     });
     this.setState({ events });
   };*/
+
