@@ -18,7 +18,7 @@ class Addteach extends React.Component {
     receiver: ""
   };
   render() {
-    const { users } = this.state;
+    const { users } = this.props;
     const { columncount } = this.props;
     return (
       <form
@@ -102,12 +102,11 @@ class Addteach extends React.Component {
                 height: "min-content"
               }}
             >
-              {this.state.userQuery !== "" &&
+              {this.props.userQuery !== "" &&
                 users &&
                 users.map(
                   (x) =>
-                    this.props.community &&
-                    x.username.includes(this.state.userQuery) && (
+                    x.username.includes(this.props.userQuery) && (
                       <div
                         onClick={() => {
                           if (
@@ -253,7 +252,7 @@ class Addteach extends React.Component {
                     )
                 )}
 
-              {this.state.userQuery === "" &&
+              {this.props.userQuery === "" &&
                 this.props.user !== undefined &&
                 this.props.community.delegatesProfiled &&
                 this.props.community.delegatesProfiled.map((user) => {
