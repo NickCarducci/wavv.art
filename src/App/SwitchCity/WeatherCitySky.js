@@ -29,47 +29,47 @@ const plainImg =
 //as a component... I don't think I can lasy load a function without props so I'll wait to do that
 export class PlainImg extends React.Component {
   render() {
-    return <img src={plainImg} style={this.props.style} alt="error" />;
+    return <img src={plainImg} style={this.props.style} alt="grass" />;
   }
 }
 export class CityImg extends React.Component {
   render() {
-    return <img src={cityImg} style={this.props.style} alt="error" />;
+    return <img src={cityImg} style={this.props.style} alt="city" />;
   }
 }
 export class Beach extends React.Component {
   render() {
-    return <img src={beach} style={this.props.style} alt="error" />;
+    return <img src={beach} style={this.props.style} alt="beach" />;
   }
 }
 export class BigSnow extends React.Component {
   render() {
-    return <img src={bigSnow} style={this.props.style} alt="error" />;
+    return <img src={bigSnow} style={this.props.style} alt="snow" />;
   }
 }
 export class LittleSnow extends React.Component {
   render() {
-    return <img src={littleSnow} style={this.props.style} alt="error" />;
+    return <img src={littleSnow} style={this.props.style} alt="flurry" />;
   }
 }
 export class HeavyRain extends React.Component {
   render() {
-    return <img src={heavyRain} style={this.props.style} alt="error" />;
+    return <img src={heavyRain} style={this.props.style} alt="pouring" />;
   }
 }
 export class LightRain extends React.Component {
   render() {
-    return <img src={lightRain} style={this.props.style} alt="error" />;
+    return <img src={lightRain} style={this.props.style} alt="rain" />;
   }
 }
 export class LightClouds extends React.Component {
   render() {
-    return <img src={lightClouds} style={this.props.style} alt="error" />;
+    return <img src={lightClouds} style={this.props.style} alt="fog" />;
   }
 }
 export class VeryCloudy extends React.Component {
   render() {
-    return <img src={veryCloudy} style={this.props.style} alt="error" />;
+    return <img src={veryCloudy} style={this.props.style} alt="clouds" />;
   }
 }
 
