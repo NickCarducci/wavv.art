@@ -326,39 +326,38 @@ class Folder extends React.Component {
             });
             this.props.fetchCommEvents(resComm, "event");
             this.props.fetchCommForum(resComm, this.props.commtype);
-          } else {
-            const letterEntered = /^[\W\D]/;
-            if (letterEntered.test(id) && id.includes(",")) {
-              console.log("with commas, probably city " + id);
-              if (this.state.newCityToQuery === id) {
-                this.props.setData({ community: null, city: id });
-                this.setState(
-                  {
-                    newCityToQuery: null
-                  },
-                  () => {
-                    this.setState({
-                      newCityToQuery: id
-                    });
-                  }
-                );
-                this.props.unloadGreenBlue();
-              } else
-                this.setState(
-                  {
+          }
+          const letterEntered = /^[\W\D]/;
+          if (letterEntered.test(id) && id.includes(",")) {
+            console.log("with commas, probably city " + id);
+            if (this.state.newCityToQuery === id) {
+              this.props.setData({ community: null, city: id });
+              this.setState(
+                {
+                  newCityToQuery: null
+                },
+                () => {
+                  this.setState({
                     newCityToQuery: id
-                  },
-                  () => {}
-                );
-            } else {
-              window.alert(
-                "pathname " +
-                  id +
-                  " not recognized. (1) City  requires comma, " +
-                  "(2) descriptive, community, user has not taken this name"
+                  });
+                }
               );
-              this.props.navigate("/");
-            }
+              this.props.unloadGreenBlue();
+            } else
+              this.setState(
+                {
+                  newCityToQuery: id
+                },
+                () => {}
+              );
+          } else {
+            window.alert(
+              "pathname " +
+                id +
+                " not recognized. (1) City  requires comma, " +
+                "(2) descriptive, community, user has not taken this name"
+            );
+            this.props.navigate("/");
           }
         },
         entity: async () => {
