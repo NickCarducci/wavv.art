@@ -276,37 +276,35 @@ class Composition extends React.Component {
             width: maxWidth
           }}
         >
-          {Photo ? (
-            Photo
-          ) : !Errorf ? (
-            <div id={id} style={{ width: "100%", position: "relative" }}>
-              {this.state.error && (
-                <button
-                  style={buttonStyle}
-                  onClick={() => {
-                    const { id, i, fallback, verbose } = this.props;
+          {Photo
+            ? Photo
+            : !Errorf && (
+                <div id={id} style={{ width: "100%", position: "relative" }}>
+                  {this.state.error && (
+                    <button
+                      style={buttonStyle}
+                      onClick={() => {
+                        const { id, i, fallback, verbose } = this.props;
 
-                    this.getPhotos(id, i, fallback, verbose);
-                    //this.storePhoto(fallback, id, i)
-                  }}
-                >
-                  restore photo
-                </button>
+                        this.getPhotos(id, i, fallback, verbose);
+                        //this.storePhoto(fallback, id, i)
+                      }}
+                    >
+                      restore photo
+                    </button>
+                  )}
+                  <div id={id} style={{ width: "100%", position: "relative" }}>
+                    <img
+                      id={id}
+                      //ref={this.Photo}
+                      alt={alt}
+                      className={className}
+                      src={fallback}
+                      style={{ ...lazyImageStyle, ...style }}
+                    />
+                  </div>
+                </div>
               )}
-              <div id={id} style={{ width: "100%", position: "relative" }}>
-                <img
-                  id={id}
-                  //ref={this.Photo}
-                  alt={alt}
-                  className={className}
-                  src={fallback}
-                  style={{ ...lazyImageStyle, ...style }}
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="loader" />
-          )}
         </div>
       </div>
     );
