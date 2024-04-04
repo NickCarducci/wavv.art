@@ -326,38 +326,39 @@ class Folder extends React.Component {
             });
             this.props.fetchCommEvents(resComm, "event");
             this.props.fetchCommForum(resComm, this.props.commtype);
-          }
-          const letterEntered = /^[\W\D]/;
-          if (letterEntered.test(id) && id.includes(",")) {
-            console.log("with commas, probably city " + id);
-            if (this.state.newCityToQuery === id) {
-              this.props.setData({ community: null, city: id });
-              this.setState(
-                {
-                  newCityToQuery: null
-                },
-                () => {
-                  this.setState({
-                    newCityToQuery: id
-                  });
-                }
-              );
-              this.props.unloadGreenBlue();
-            } else
-              this.setState(
-                {
-                  newCityToQuery: id
-                },
-                () => {}
-              );
           } else {
-            window.alert(
-              "pathname " +
-                id +
-                " not recognized. (1) City  requires comma, " +
-                "(2) descriptive, community, user has not taken this name"
-            );
-            this.props.navigate("/");
+            const letterEntered = /^[\W\D]/;
+            if (letterEntered.test(id) && id.includes(",")) {
+              console.log("with commas, probably city " + id);
+              if (this.state.newCityToQuery === id) {
+                this.props.setData({ community: null, city: id });
+                this.setState(
+                  {
+                    newCityToQuery: null
+                  },
+                  () => {
+                    this.setState({
+                      newCityToQuery: id
+                    });
+                  }
+                );
+                this.props.unloadGreenBlue();
+              } else
+                this.setState(
+                  {
+                    newCityToQuery: id
+                  },
+                  () => {}
+                );
+            } else {
+              window.alert(
+                "pathname " +
+                  id +
+                  " not recognized. (1) City  requires comma, " +
+                  "(2) descriptive, community, user has not taken this name"
+              );
+              this.props.navigate("/");
+            }
           }
         },
         entity: async () => {
@@ -1173,3 +1174,4 @@ class Folder extends React.Component {
 export default React.forwardRef((props, ref) => (
   <Folder {...props} {...ref.current} />
 ));
+
