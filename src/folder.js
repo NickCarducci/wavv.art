@@ -311,6 +311,7 @@ class Folder extends React.Component {
       return {
         communityOrCity: async (id) => {
           id = specialFormatting(id).replace(/_/g, " ");
+          this.props.setData({ forumPosts: [] });
           var resComm = await this.props.getCommunityByName(id);
           resComm =
             resComm.constructor === String ? JSON.parse(resComm) : resComm;
@@ -1174,4 +1175,5 @@ class Folder extends React.Component {
 export default React.forwardRef((props, ref) => (
   <Folder {...props} {...ref.current} />
 ));
+
 
