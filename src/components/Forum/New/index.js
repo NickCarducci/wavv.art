@@ -345,17 +345,18 @@ class NewForum extends React.Component {
               this.props.auth !== undefined &&
               this.props.community[key].includes(this.props.auth.uid);
             if (
-              ![
+              this.props.community &&
+              (![
                 "ordinance",
                 "election",
                 "department",
                 "class",
                 "case"
               ].includes(x) ||
-              (auth("faculty") && ["class", "department"].includes(x)) ||
-              auth("admin") ||
-              (this.props.auth !== undefined &&
-                this.props.auth.uid === this.props.community.authorId)
+                (auth("faculty") && ["class", "department"].includes(x)) ||
+                auth("admin") ||
+                (this.props.auth !== undefined &&
+                  this.props.auth.uid === this.props.community.authorId))
             ) {
               return <option key={x + "new"}>{x}</option>;
             } else return null;
