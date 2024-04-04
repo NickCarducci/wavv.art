@@ -417,6 +417,7 @@ class LazyPhoto extends React.Component {
             position: "relative"
           }}
         >
+          {alt}
           {Errorf !== 0 ? (
             //for import() path
             <div
