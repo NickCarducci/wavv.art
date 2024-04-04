@@ -3,6 +3,7 @@ module.exports = function override(config, env) {
   //do stuff with the webpack config...
 
   config.resolve.fallback = {
+    child_process: false,
     url: require.resolve("url"),
     assert: require.resolve("assert"),
     crypto: require.resolve("crypto-browserify"),
