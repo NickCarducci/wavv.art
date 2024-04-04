@@ -133,6 +133,7 @@ class Filters extends React.Component {
     return (
       <div
         style={{
+          display: "none",
           bottom: "0px",
           overflow: "hidden",
           zIndex: 9999,
@@ -148,7 +149,7 @@ class Filters extends React.Component {
           style={{
             transition: ".3s ease-in",
             backgroundColor: "rgba(20,20,40,.5)",
-            display: "none",
+            display: "flex",
             top: "0px",
             position: "absolute",
             width: "100%",
