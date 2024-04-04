@@ -598,6 +598,70 @@ class Data extends React.Component {
     commtype = this.state.commtype,
     noLoad
   ) => {
+    !noLoad && this.props.loadGreenBlue("forum fetch for " + city);
+    onSnapshot(
+      query(collection(firestore, "forum"), where("city", "==", city)),
+      async (querySnapshot) => {
+        let forumPosts = [];
+        querySnapshot.docs.forEach((doc) => {
+          if (doc.exists()) {
+            forumPosts.push({ ...doc.data(), id: doc.id });
+          }
+        });
+        if (forumPosts.length === querySnapshot.docs.length) {
+          //console.log(entity);
+          this.setState({
+            lastCityPost: querySnapshot.docs[querySnapshot.docs.length - 1],
+            undoCityPost: querySnapshot.docs[0],
+            forumPosts: await Promise.all(
+              querySnapshot.docs.map(
+                async (doc) =>
+                  await new Promise(async (r) => {
+                    if (!doc.exists()) return r(null);
+                    const foo = doc.data();
+                    //console.log(foo);
+                    const done = JSON.stringify({
+                      ...foo,
+                      id: doc.id,
+                      collection: "forum",
+                      shortId: "forum" + doc.id,
+                      author: JSON.parse(
+                        await this.hydrateUser(foo.authorId).user()
+                      ),
+                      droppedPost:
+                        foo.droppedId &&
+                        JSON.parse(
+                          await this.handleDropId(foo.droppedId).promise()
+                        ),
+                      videos: JSON.parse(
+                        await this.hydratePostChatMeta(foo).meta()
+                      ),
+                      community:
+                        foo.communityId &&
+                        JSON.parse(
+                          await this.getCommunity(foo.communityId).community()
+                        ),
+                      entity:
+                        foo.entityId &&
+                        JSON.parse(
+                          await this.hydrateEntity(
+                            foo.entityId,
+                            foo.entityType
+                          ).entity()
+                        )
+                    });
+                    return r(done);
+                  })
+              )
+            ).then((docs) => {
+              this.props.unloadGreenBlue();
+              return docs.filter((x) => x).map((a) => JSON.parse(a));
+            })
+          });
+        }
+      }
+    );
+    return null;
     this.setState({
       ...this.newPostingsClass,
       community: null,
@@ -3589,7 +3653,7 @@ class Data extends React.Component {
   getComments = (profile) => this.handleProfileComments(profile);
 
   finFetchForum = (product) => {
-    //console.log(product);
+    //if(product.id === matchy(this.state.currentJail.snapshotQuery))return console.log(product);
     const stasis = !product.docs
       ? null
       : product.docs.length === 0
@@ -3692,6 +3756,7 @@ class Data extends React.Component {
             });
           }
         } else {
+          //console.log(collection + product.state.role, forumPosts);
           this.setState({
             [product.docsOutputLabel]: forumPosts
           });
@@ -4059,6 +4124,7 @@ class Data extends React.Component {
               : product;
             console.log("stateAfterLabel", product.stateAfter);
             console.log("endBeforeLabel", product.endBefore);
+            console.log("docs", product.docs);
             this.setState(
               {
                 freedocs: [
@@ -4480,3 +4546,4 @@ export default React.forwardRef((props, ref) => (
         UPDATABLE = true;
         return { docs, startAfter, endBefore, close,UPDATABLE };
       }*/
+
