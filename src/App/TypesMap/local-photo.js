@@ -418,34 +418,32 @@ class LazyPhoto extends React.Component {
           }}
         >
           {alt}
-          {Errorf !== 0 ? (
+          {Errorf !== 0 && (
             //for import() path
+            //if either fails || loadingError, just use //dropboxusercontent url &
+            //img.alt error handler
             <div
               style={{
-                width: "100%",
+                width: "30%",
                 position: "relative",
                 overflow: "hidden"
               }}
             >
               {Photo ? Photo : <div className="loader" />}
             </div>
-          ) : (
-            //if either fails || loadingError, just use
-            //dropboxusercontent url & img.alt error handler
-
-            <Composition
-              verbose={verbose}
-              i={i}
-              alt={alt}
-              style={style}
-              className={className}
-              id={id}
-              fallback={fallback} // openSrc, closeSrc
-              tileType={tileType} //dynamic-props
-              maxWidth={maxWidth ? maxWidth : "100%"} //on window 'resize'
-              buttonStyle={buttonStyle}
-            />
           )}
+          <Composition
+            verbose={verbose}
+            i={i}
+            alt={alt}
+            style={style}
+            className={className}
+            id={id}
+            fallback={fallback} // openSrc, closeSrc
+            tileType={tileType} //dynamic-props
+            maxWidth={maxWidth ? maxWidth : "100%"} //on window 'resize'
+            buttonStyle={buttonStyle}
+          />
         </div>
       </div>
     );
