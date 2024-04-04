@@ -124,7 +124,7 @@ class EventTypeTop extends React.Component {
                 src={
                   "https://www.dropbox.com/s/je6u6p4o58r46d4/outofoffice%20%283%29.png?raw=1"
                 }
-                alt="error"
+                alt="outofoffice"
               />
             )}
             {this.props.community ? (
