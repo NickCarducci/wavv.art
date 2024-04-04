@@ -148,7 +148,7 @@ class Filters extends React.Component {
           style={{
             transition: ".3s ease-in",
             backgroundColor: "rgba(20,20,40,.5)",
-            display: "flex",
+            display: "none",
             top: "0px",
             position: "absolute",
             width: "100%",
@@ -181,3 +181,4 @@ class Filters extends React.Component {
 }
 
 export default Filters;
+
