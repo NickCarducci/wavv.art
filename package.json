@@ -61,7 +61,8 @@
     "styled-components": "^4.4.1",
     "supercluster": "8.0.1",
     "ua-parser-js": "1.0.2",
-    "us-state-codes": "^1.1.2"
+    "us-state-codes": "^1.1.2",
+    "vm-browserify": "1.1.2"
   },
   "devDependencies": {
     "react-scripts": "5.0.1"
