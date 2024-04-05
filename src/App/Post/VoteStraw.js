@@ -204,6 +204,63 @@ class VoteStraw extends React.Component {
               >
                 {/*new Date(parent.date.seconds * 1000).toLocaleDateString()*/}
               </div>
+              {this.props.auth === undefined ||
+              this.props.parent.commtype !==
+                "election" ? null : parent.candidateRequests &&
+                parent.candidateRequests.includes(this.props.auth.uid) ? (
+                <div
+                  onClick={() => {
+                    updateDoc(
+                      doc(
+                        firestore,
+                        this.props.parent.collection,
+                        this.props.parent.id
+                      ),
+                      {
+                        candidateRequests: arrayRemove(this.props.auth.uid)
+                      }
+                    )
+                      .then(() => {
+                        window.alert(
+                          "removed candidacy request " +
+                            this.props.parent.id +
+                            this.props.auth.uid +
+                            " you may need to refresh to reapply"
+                        );
+                      })
+                      .catch((e) => console.log(e.message));
+                  }}
+                >
+                  adding your candidacy...
+                </div>
+              ) : (
+                !parent.candidates.includes(this.props.auth.uid) && (
+                  <div
+                    onClick={() => {
+                      updateDoc(
+                        doc(
+                          firestore,
+                          this.props.parent.collection,
+                          this.props.parent.id
+                        ),
+                        {
+                          candidateRequests: arrayUnion(this.props.auth.uid)
+                        }
+                      )
+                        .then(() => {
+                          console.log(
+                            "requesting candidacy " +
+                              this.props.parent.id +
+                              this.props.auth.uid
+                          );
+                        })
+                        .catch((e) => console.log(e.message));
+                    }}
+                  >
+                    add your candidacy
+                  </div>
+                )
+              )}
               {this.props.auth !== undefined &&
               this.props.parent.commtype === "election" ? (
                 this.props.auth.uid === this.props.community.authorId ||
@@ -275,59 +332,7 @@ class VoteStraw extends React.Component {
                       <button type="submit">add to "ballot"</button>
                     )}
                   </form>
-                ) : parent.candidateRequests &&
-                  parent.candidateRequests.includes(this.props.auth.uid) ? (
-                  <div
-                    onClick={() => {
-                      updateDoc(
-                        doc(
-                          firestore,
-                          this.props.parent.collection,
-                          this.props.parent.id
-                        ),
-                        {
-                          candidateRequests: arrayRemove(this.props.auth.uid)
-                        }
-                      )
-                        .then(() => {
-                          window.alert(
-                            "removed candidacy request " +
-                              this.props.parent.id +
-                              this.props.auth.uid +
-                              " you may need to refresh to reapply"
-                          );
-                        })
-                        .catch((e) => console.log(e.message));
-                    }}
-                  >
-                    adding your candidacy...
-                  </div>
-                ) : (
-                  <div
-                    onClick={() => {
-                      updateDoc(
-                        doc(
-                          firestore,
-                          this.props.parent.collection,
-                          this.props.parent.id
-                        ),
-                        {
-                          candidateRequests: arrayUnion(this.props.auth.uid)
-                        }
-                      )
-                        .then(() => {
-                          console.log(
-                            "requesting candidacy " +
-                              this.props.parent.id +
-                              this.props.auth.uid
-                          );
-                        })
-                        .catch((e) => console.log(e.message));
-                    }}
-                  >
-                    add your candidacy
-                  </div>
-                )
+                ) : null
               ) : null}
               <div style={{ position: "relative" }}>
                 <div
