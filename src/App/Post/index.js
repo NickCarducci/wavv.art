@@ -1107,6 +1107,16 @@ class Post extends React.Component {
                         }
                       }}
                     />
+                    <div
+                      onClick={() =>
+                        this.setState({ videoRecorderOpen: false })
+                      }
+                      style={{
+                        padding: "5px"
+                      }}
+                    >
+                      &times;
+                    </div>
                   </form>
                 )}
                 <div
