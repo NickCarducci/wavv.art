@@ -323,7 +323,8 @@ class Folder extends React.Component {
             this.props.setData({
               community: resComm,
               isCommunity: id,
-              city: resComm.place_name
+              city: resComm.place_name,
+              isProfile: null
             });
             this.props.fetchCommEvents(resComm, "event");
             this.props.fetchCommForum(resComm, this.props.commtype);
@@ -332,7 +333,11 @@ class Folder extends React.Component {
             if (letterEntered.test(id) && id.includes(",")) {
               console.log("with commas, probably city " + id);
               if (this.state.newCityToQuery === id) {
-                this.props.setData({ community: null, city: id });
+                this.props.setData({
+                  community: null,
+                  city: id,
+                  isProfile: null
+                });
                 this.setState(
                   {
                     newCityToQuery: null
@@ -1175,5 +1180,4 @@ class Folder extends React.Component {
 export default React.forwardRef((props, ref) => (
   <Folder {...props} {...ref.current} />
 ));
-
 
