@@ -32,7 +32,7 @@ const buttonStyle = {
 //Save $, america
 //every voter wants to cut the deficits and end the fed
 //but 68.85%-82.05% supporting occupy didn't vote
-const make = (fallback, maxWidth, id, i, open) =>
+const make = (fallback, maxWidth, id, i, open, alt) =>
   React.createElement(
     LazyPhoto,
     {
@@ -54,7 +54,8 @@ const make = (fallback, maxWidth, id, i, open) =>
       buttonStyle,
       maxWidth: maxWidth - 20,
       nolabel: true,
-      verbose: false
+      verbose: false,
+      alt: id
     },
     id + i
   );
@@ -1867,13 +1868,7 @@ export class OrdinanceImg extends React.Component {
         "https://www.dropbox.com/s/gd053a7518whzul/ForumFILTER_Notices%20%281%29.png?raw=1", //openSrc
         "https://www.dropbox.com/s/sd5y9k6kn2l32sk/ForumFILTER_Notices%20%28closed%29%20%282%29.png?raw=1" //closeSrc
       ].map((fallback, i) =>
-        make(
-          fallback,
-          maxWidth,
-          tileChosen + "/" + title,
-          i,
-          title === commtype
-        )
+        make(fallback, maxWidth, commtype + "/" + title, i, title === commtype)
       )
     );
   }
@@ -1948,13 +1943,7 @@ export class DepartmentImg extends React.Component {
         "https://www.dropbox.com/s/e99u2x4fg2fl21q/ForumFILTER_Departments.png?raw=1", //openSrc
         "https://www.dropbox.com/s/sijy9a7ux1g0lac/ForumFILTER_Departments%20%28closed%29.png?raw=1" //closeSrc
       ].map((fallback, i) =>
-        make(
-          fallback,
-          maxWidth,
-          tileChosen + "/" + title,
-          i,
-          title === commtype
-        )
+        make(fallback, maxWidth, commtype + "/" + title, i, title === commtype)
       )
     );
   }
