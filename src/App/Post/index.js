@@ -1109,12 +1109,27 @@ class Post extends React.Component {
                     />
                   </form>
                 )}
-
-                {onlyPost === parent.shortId &&
-                  parent.videos &&
-                  parent.videos.map((url) => {
-                    return <a href={url}>{url}</a>;
-                  })}
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap"
+                  }}
+                >
+                  {onlyPost === parent.shortId &&
+                    parent.videos &&
+                    parent.videos.map((url, i) => {
+                      return (
+                        <a
+                          style={{
+                            padding: "20px"
+                          }}
+                          href={url}
+                        >
+                          {i + 1}
+                        </a>
+                      );
+                    })}
+                </div>
                 {/*<Media
                   isDroppedIn={isDroppedIn}
                   videoRecorderOpen={this.state.videoRecorderOpen}
