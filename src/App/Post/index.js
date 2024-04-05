@@ -1124,6 +1124,8 @@ class Post extends React.Component {
                             padding: "20px"
                           }}
                           href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
                           {i + 1}
                         </a>
