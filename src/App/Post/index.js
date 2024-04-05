@@ -13,14 +13,22 @@ import NotCommForum from "./NotCommForum";
 import Title from "./Media/Title";
 import Media from "./Media";
 import PeanutGallery from "./PeanutGallery/index";
-import { doc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  doc,
+  getFirestore,
+  setDoc,
+  updateDoc
+} from "firebase/firestore";
 import TwitterTweetEmbed from "../.././TwitterTweetEmbed";
 import { arrayMessage } from "./Media/EditTitle";
 import { canIView } from "../.././data";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 //Are online banking services always allowed to be fraudulent by the Consumer Finance Protection Bureau without competition beyond CFR 12.1.5 sponsorship?
 //What kind of medical science questions don't belong on skeptics?
 
+const storage = getStorage(firebase);
 const firestore = getFirestore(firebase);
 class EditTitle extends React.Component {
   constructor(props) {
@@ -995,7 +1003,119 @@ class Post extends React.Component {
                     {parent.body}
                   </div>
                 )}
-                <Media
+                {this.state.videoRecorderOpen && (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                    }}
+                  >
+                    <input
+                      type="file"
+                      onChange={(event) => {
+                        // Update the state
+                        // const fileReader = new window.FileReader();
+                        var selectedFile = event.target.files[0];
+                        if (selectedFile) {
+                          console.log(selectedFile);
+                          var blob;
+                          var url;
+                          if (
+                            selectedFile.type.includes("video") ||
+                            selectedFile.type.includes("image") ||
+                            selectedFile.type.includes("application/pdf")
+                          ) {
+                            blob = new Blob([selectedFile], {
+                              type: selectedFile.type //"video/mp4"
+                            });
+                            url = window.URL.createObjectURL(blob);
+                            console.log("blob", url);
+                            this.setState({ selectedFile, url, blob });
+                            if (selectedFile.type.includes("video")) {
+                              this.videoObj = this.video.current;
+                              if (this.videoObj) {
+                                //this.videoObj.srcObject = selectedFile.stream;
+                                this.videoObj.src = this.state.url;
+                                this.setState({ video: true });
+                              }
+                            } else {
+                              this.setState({ video: false });
+                            }
+                            var pathReference = `personalCaptures/${this.props.auth.uid}/*`;
+                            var itemRef = ref(
+                              storage,
+                              pathReference + `/${selectedFile.name}`
+                            ); // this.props.storageRef.child(pathReference + "/" + filename);
+                            const create = (x) => {
+                              console.log(
+                                "no doc exists by name of: " + x.title
+                              );
+                              // Create a root reference
+                              console.log(`adding to ${x.folder}...`);
+                              uploadBytes(itemRef, blob)
+                                .then(async (snapshot) => {
+                                  console.log(snapshot);
+                                  console.log(
+                                    `${x.title}.${x.type.split("/")[1]}` +
+                                      " added to " +
+                                      `personalCaptures/${this.props.auth.uid}/${x.folder}`
+                                  );
+
+                                  var pathReference = `personalCaptures/${parent.authorId}/*`;
+                                  var itemRef = ref(
+                                    storage,
+                                    pathReference + `/${selectedFile.name}`
+                                  );
+                                  const url = await getDownloadURL(itemRef);
+                                  updateDoc(
+                                    doc(
+                                      firestore,
+                                      parent.collection,
+                                      parent.id
+                                    ),
+                                    {
+                                      videos: arrayUnion(url)
+                                    }
+                                  ).catch((e) => console.log(e.message));
+                                })
+                                .catch((err) => console.log(err.message));
+                            };
+                            getDownloadURL(itemRef)
+                              .then((url) => {
+                                window.alert(
+                                  `capture exists with this name "${x.title}"` +
+                                    ` in "${this.props.user.username}/personalCaptures/," Please rename this`
+                                );
+                                console.log(
+                                  `capture exists with this name "${x.title}"` +
+                                    ` in "${this.props.user.username}/personalCaptures/," Please rename this`
+                                );
+                              })
+                              .catch((error) => {
+                                // https://firebase.google.com/docs/storage/web/handle-errors
+                                if (error.code === "storage/object-not-found") {
+                                  create({
+                                    title: selectedFile.name,
+                                    folder: pathReference,
+                                    type: selectedFile.type
+                                  });
+                                } else return console.log(error.code);
+                              });
+                          } else
+                            return window.alert(
+                              `unsupported file type ${selectedFile.type}`
+                            );
+                        }
+                      }}
+                    />
+                  </form>
+                )}
+
+                {onlyPost === parent.shortId &&
+                  parent.videos &&
+                  parent.videos.map((url) => {
+                    return <a href={url}>{url}</a>;
+                  })}
+                {/*<Media
                   isDroppedIn={isDroppedIn}
                   videoRecorderOpen={this.state.videoRecorderOpen}
                   vintageOfKeys={this.props.vintageOfKeys}
@@ -1022,7 +1142,7 @@ class Post extends React.Component {
                   setPost={(x) => this.setState(x)}
                   entityType={this.props.entityType}
                   entityId={this.props.entityId}
-                />
+                />*/}
                 {commtype === "new" && //Does academia tend to plagiarize those that happen to make discoveries outside of their fields to fix the price of education?
                   [parent.twitterString, readAsTwitter].map(
                     (x) =>
@@ -1224,7 +1344,6 @@ class Post extends React.Component {
             getVideos={this.props.getVideos}
             getFolders={this.props.getFolders}
             folders={parent.folders}
-            videos={this.props.videos}
             isPost={true}
             auth={auth}
             room={{ id: `${parent.shortId}` }}
