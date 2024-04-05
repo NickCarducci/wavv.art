@@ -309,8 +309,8 @@ class Folder extends React.Component {
     ];
     const showPage = () => {
       return {
-        communityOrCity: async (id) => {
-          id = specialFormatting(id).replace(/_/g, " ");
+        communityOrCity: async (idd) => {
+          var id = specialFormatting(idd).replace(/_/g, " ");
           this.props.setData({ forumPosts: [] });
           var resComm = await this.props.getCommunityByName(id);
           resComm =
@@ -357,6 +357,9 @@ class Folder extends React.Component {
                   () => {}
                 );
             } else {
+              console.log("id", idd);
+              //if (String(id).startsWith("forum")) {
+              drop(null, idd);
               window.alert(
                 "pathname " +
                   id +
@@ -1180,4 +1183,3 @@ class Folder extends React.Component {
 export default React.forwardRef((props, ref) => (
   <Folder {...props} {...ref.current} />
 ));
-
