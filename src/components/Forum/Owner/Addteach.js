@@ -256,7 +256,7 @@ class Addteach extends React.Component {
                 this.props.user !== undefined &&
                 this.props.community.delegatesProfiled &&
                 this.props.community.delegatesProfiled.map((user) => {
-                  var allClasses = onSnapshot(
+                  /*var allClasses = onSnapshot(
                     query(
                       collection(firestore, "classes"),
                       where("authorId", "==", user.id)
@@ -281,7 +281,7 @@ class Addteach extends React.Component {
                       );
                       return ho;
                     }
-                  );
+                  );*/
                   return (
                     <div
                       key={user}
@@ -298,11 +298,21 @@ class Addteach extends React.Component {
                         style={{
                           flexDirection: "column",
                           marginRight: "20px",
-                          display: "flex"
+                          display: "none"
                         }}
                       >
-                        <div>c{allClasses.length}</div>
-                        <div>d{allDepts.length}</div>
+                        <div>
+                          c
+                          {
+                            //allClasses.length
+                          }
+                        </div>
+                        <div>
+                          d
+                          {
+                            //allDepts.length
+                          }
+                        </div>
                       </div>
                     </div>
                   );
