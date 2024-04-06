@@ -334,23 +334,25 @@ class VoteStraw extends React.Component {
                   </form>
                 ) : null
               ) : null}
-              <div style={{ position: "relative" }}>
-                <div
-                  style={{
-                    position: "absolute",
-                    right: "0px",
-                    top: "0px",
-                    zIndex: "6"
-                  }}
-                  onClick={() =>
-                    this.props.setShowing({
-                      closeFilter: true
-                    })
-                  }
-                >
-                  &times;
+              {false && (
+                <div style={{ position: "relative" }}>
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: "0px",
+                      top: "0px",
+                      zIndex: "6"
+                    }}
+                    onClick={() =>
+                      this.props.setShowing({
+                        closeFilter: true
+                      })
+                    }
+                  >
+                    &times;
+                  </div>
                 </div>
-              </div>
+              )}
               {false && (
                 <select
                   value={this.state.by}
@@ -527,6 +529,8 @@ class VoteStraw extends React.Component {
                               this.setState({ hoveredd: false })
                             }
                             style={{
+                              width: "max-content",
+                              padding: "0px 4px",
                               margin: "4px",
                               marginLeft: "4px",
                               color:
