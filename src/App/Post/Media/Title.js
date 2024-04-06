@@ -93,6 +93,7 @@ class Title extends React.Component {
         }
         <div
           style={{
+            display: "none",
             textAlign: "center",
             color: opening !== parent.shortId ? "black" : "rgb(210,210,225)",
             right: onlyPost !== parent.shortId ? "" : "40px",
@@ -123,3 +124,4 @@ class Title extends React.Component {
   }
 }
 export default Title;
+
