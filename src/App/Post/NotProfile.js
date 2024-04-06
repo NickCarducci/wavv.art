@@ -89,7 +89,7 @@ class NotProfile extends React.Component {
     locale = locale && locale.constructor === String ? locale : "";
     return (
       <div
-        onMouseEnter={() =>
+        /*onMouseEnter={() =>
           !this.props.isProfile &&
           this.setState({ openingProfile: parent.author.id }, () => {
             clearTimeout(this.holding);
@@ -104,7 +104,7 @@ class NotProfile extends React.Component {
           this.setState({ openingProfile: "" }, () =>
             clearTimeout(this.holding)
           )
-        }
+        }*/
         style={{
           paddingTop: this.props.isProfile ? "10px" : "0px",
           transition: `${this.props.isProfile ? 0.3 : 1}s ease-in`,
@@ -191,6 +191,7 @@ class NotProfile extends React.Component {
               onMouseLeave={() => this.setState({ hoveringFollowBtn: false })}
               onClick={() => this.handleFollow(user, iAmFollowing)}
               style={{
+                display: "none",
                 height: "min-content",
                 backgroundColor: blue ? "rgb(150,200,250)" : "",
                 textAlign: "center",
@@ -205,11 +206,10 @@ class NotProfile extends React.Component {
             >
               {!iAmFollowing ? "+" : "-"}
             </span>
-            &nbsp;&nbsp;
-            {locale.substring(0, 3)}
           </div>
           <div
             style={{
+              display: "none",
               width: "max-content",
               color: "grey",
               fontSize: "15px",
@@ -249,4 +249,3 @@ export default NotProfile;
   >
     {parent.viewCount}
   </i>*/
-
