@@ -340,6 +340,8 @@ class Auth extends React.Component {
         } //ra;//null;
         signOut(getAuth())
           .then(async () => {
+            this.props.navigate("/");
+            window.location.reload();
             console.log("logged out");
             await setPersistence(getAuth(), browserSessionPersistence);
             this.setState({
