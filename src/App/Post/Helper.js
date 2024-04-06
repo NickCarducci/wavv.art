@@ -320,7 +320,7 @@ class Helper extends React.Component {
           ) : (
             ""
           )}
-          {(this.props.auth === undefined ||
+          {/*(this.props.auth === undefined ||
             this.props.auth.uid !== parent.authorId) && (
             <div
               style={{ width: "40px", height: "40px", position: "relative" }}
@@ -370,7 +370,7 @@ class Helper extends React.Component {
                 </div>
               )}
             </div>
-          )}
+                )*/}
 
           {/*this.props.comment !== "" && (
           <div
