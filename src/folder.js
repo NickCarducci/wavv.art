@@ -523,6 +523,11 @@ class Folder extends React.Component {
             dropToCheck: null
           },
           () => {
+            this.props.setData({
+              community: null,
+              city: this.props.item.place_name,
+              isProfile: null
+            });
             //this.sustainPath("/", true);
             go();
           }
@@ -1183,3 +1188,4 @@ class Folder extends React.Component {
 export default React.forwardRef((props, ref) => (
   <Folder {...props} {...ref.current} />
 ));
+
