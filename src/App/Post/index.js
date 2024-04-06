@@ -317,6 +317,9 @@ class Post extends React.Component {
     //console.log("posts", this.props.cards);
     return (
       <div
+        onClick={() => {
+          this.props.setFoundation({ editingCommunity: false });
+        }}
         /*onMouseEnter={() =>
           mounted &&
           this.setState(
