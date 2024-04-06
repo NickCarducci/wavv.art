@@ -319,16 +319,12 @@ class Addadmin extends React.Component {
                                   this.props.community.id
                                 ),
                                 {
-                                  admin: firebase.firestore.FieldValue.arrayRemove(
-                                    user.id
-                                  )
+                                  admin: arrayRemove(user.id)
                                 }
                               )
                                 .then(() => {
                                   updateDoc(doc(firestore, "users", user.id), {
-                                    admins: firebase.firestore.FieldValue.arrayRemove(
-                                      this.props.community.id
-                                    )
+                                    admins: arrayRemove(this.props.community.id)
                                   });
                                 })
                                 .catch((err) => console.log(err.message));
