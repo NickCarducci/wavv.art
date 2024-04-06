@@ -1,4 +1,11 @@
-import { getFirestore } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  getDoc,
+  getFirestore,
+  updateDoc
+} from "firebase/firestore";
 import React from "react";
 import firebase from "../../.././init-firebase.js";
 
@@ -9,7 +16,7 @@ class Addadmin extends React.Component {
   };
   render() {
     const { columncount } = this.props;
-    //console.log(this.props.users);
+    //console.log(this.props.community);
     return (
       <form
         onSubmit={(e) => e.preventDefault()}
@@ -96,8 +103,7 @@ class Addadmin extends React.Component {
             <div
               style={{
                 width: "100%",
-                height: "min-content",
-                flexDirection: "row"
+                height: "min-content"
               }}
             >
               {this.props.userQuery !== "" &&
@@ -146,16 +152,12 @@ class Addadmin extends React.Component {
                                   this.props.community.id
                                 ),
                                 {
-                                  admin: firebase.firestore.FieldValue.arrayRemove(
-                                    x.id
-                                  )
+                                  admin: arrayRemove(x.id)
                                 }
                               )
                                 .then(() => {
                                   updateDoc(doc(firestore, "users", x.id), {
-                                    admins: firebase.firestore.FieldValue.arrayRemove(
-                                      this.props.community.id
-                                    )
+                                    admins: arrayRemove(this.props.community.id)
                                   });
                                 })
                                 .catch((err) => console.log(err.message));
@@ -185,16 +187,12 @@ class Addadmin extends React.Component {
                                   this.props.community.id
                                 ),
                                 {
-                                  admin: firebase.firestore.FieldValue.arrayUnion(
-                                    x.id
-                                  )
+                                  admin: arrayUnion(x.id)
                                 }
                               )
                                 .then(() => {
                                   updateDoc(doc(firestore, "users", x.id), {
-                                    admins: firebase.firestore.FieldValue.arrayUnion(
-                                      this.props.community.id
-                                    )
+                                    admins: arrayUnion(this.props.community.id)
                                   });
                                 })
                                 .catch((err) => console.log(err.message));
@@ -253,16 +251,17 @@ class Addadmin extends React.Component {
                     );
                   } else return null;
                 })}
-              {this.state.userQuery === "" &&
-                this.props.user !== undefined &&
+              {this.props.userQuery === "" &&
+                this.props.auth !== undefined &&
                 this.props.community &&
-                this.props.community.admin &&
-                this.props.community.admin.map((x) => {
-                  var user = this.props.users.find((y) => y.id === x);
-                  if (this.props.auth.uid !== user.id) {
+                this.props.community.adminProfiled &&
+                this.props.community.adminProfiled.map((user) => {
+                  //console.log(user);
+                  //var user = await this.props.hydrateUser(x); //await getDoc(doc(firestore, "users", x));
+                  if (user.id && this.props.auth.uid !== user.id) {
                     return (
                       <div
-                        key={x}
+                        key={user.id}
                         style={{
                           display: "flex",
                           margin: "5px 0px",
@@ -275,17 +274,19 @@ class Addadmin extends React.Component {
                         <div
                           onClick={() => {
                             this.setState({
-                              receiver: x
+                              receiver: user.id
                             });
                           }}
                           style={
-                            this.state.receiver !== x ? { opacity: ".5" } : {}
+                            this.state.receiver !== user.id
+                              ? { opacity: ".5" }
+                              : {}
                           }
                         >
                           <img
                             style={{ height: "30px", width: "30px" }}
                             src={user.photoThumbnail}
-                            alt={user.username}
+                            alt=""
                           />
                           {user.name}@{user.username}
                         </div>
