@@ -46,6 +46,81 @@ class EventTypeTop extends React.Component {
             display: "flex"
           }}
         >
+          <div>
+            {!this.props.community && (
+              <img
+                style={{
+                  height: "95px"
+                }}
+                src={
+                  "https://www.dropbox.com/s/je6u6p4o58r46d4/outofoffice%20%283%29.png?raw=1"
+                }
+                alt="outofoffice"
+              />
+            )}
+            {this.props.community ? (
+              this.props.auth !== undefined &&
+              (this.props.auth.uid === this.props.community.authorId ||
+                this.props.community.admin.includes(this.props.auth.uid)) && (
+                <div
+                  onClick={() => {
+                    this.props.eventTypes("settings");
+                  }}
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <img
+                    src={settings}
+                    alt="settings"
+                    style={{
+                      zIndex: "1",
+                      opacity: ".95",
+                      left: "20px",
+                      height: "19px",
+                      padding: "7px",
+                      margin: "7px",
+                      backgroundColor: "#333",
+                      width: "19px",
+                      borderRadius: "13px"
+                    }}
+                  />
+                </div>
+              )
+            ) : (
+              <div
+                onClick={() => {
+                  var answer = window.confirm("Are you a town clerk?");
+                  if (answer && this.props.auth === undefined) {
+                    var sendtologin = window.confirm("You need to login");
+                    if (sendtologin) {
+                      this.props.getUserInfo();
+                    }
+                  } else if (answer) {
+                    this.props.setFolder({
+                      forumOpen: false
+                    });
+                    this.props.setEventTypes({
+                      showReqMayorForm: this.props.city
+                    });
+                  }
+                }}
+                style={{
+                  color: "white",
+                  borderRadius: "20px",
+                  padding: "0px 20px",
+                  display: showReqMayorForm ? "none" : "flex",
+                  right: "40px",
+                  backgroundColor: "rgba(50,50,50,.8)",
+                  top: "10px",
+                  zIndex: "1"
+                }}
+              >
+                ...
+              </div>
+            )}
+          </div>
           <div
             style={{
               position: "relative",
@@ -113,83 +188,6 @@ class EventTypeTop extends React.Component {
                   leaveItAlone={false}
                 />
               </Link>
-            )}
-          </div>
-          <div style={{ position: "absolute", transform: "translateX(50%)" }}>
-            {!this.props.community && (
-              <img
-                style={{
-                  height: "95px"
-                }}
-                src={
-                  "https://www.dropbox.com/s/je6u6p4o58r46d4/outofoffice%20%283%29.png?raw=1"
-                }
-                alt="outofoffice"
-              />
-            )}
-            {this.props.community ? (
-              this.props.auth !== undefined &&
-              (this.props.auth.uid === this.props.community.authorId ||
-                this.props.community.admin.includes(this.props.auth.uid)) && (
-                <div
-                  onClick={() => {
-                    this.props.eventTypes("settings");
-                  }}
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}
-                >
-                  <img
-                    src={settings}
-                    alt="settings"
-                    style={{
-                      zIndex: "1",
-                      top: "200px",
-                      opacity: ".95",
-                      left: "20px",
-                      position: "absolute",
-                      height: "19px",
-                      padding: "7px",
-                      backgroundColor: "#333",
-                      width: "19px",
-                      borderRadius: "13px"
-                    }}
-                  />
-                </div>
-              )
-            ) : (
-              <div
-                onClick={() => {
-                  var answer = window.confirm("Are you a town clerk?");
-                  if (answer && this.props.auth === undefined) {
-                    var sendtologin = window.confirm("You need to login");
-                    if (sendtologin) {
-                      this.props.getUserInfo();
-                    }
-                  } else if (answer) {
-                    this.props.setFolder({
-                      forumOpen: false
-                    });
-                    this.props.setEventTypes({
-                      showReqMayorForm: this.props.city
-                    });
-                  }
-                }}
-                style={{
-                  color: "white",
-                  borderRadius: "20px",
-                  padding: "0px 20px",
-                  display: showReqMayorForm ? "none" : "flex",
-                  position: "absolute",
-                  right: "40px",
-                  backgroundColor: "rgba(50,50,50,.8)",
-                  top: "10px",
-                  zIndex: "1"
-                }}
-              >
-                ...
-              </div>
             )}
           </div>
         </div>
