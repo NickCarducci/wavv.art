@@ -328,6 +328,7 @@ class Data extends React.Component {
     });
     this.state = {
       ...tileOnce,
+      commtype: "forum",
       earSideways: !isNaN(props.width) ? props.width - 70 : 0,
       earUpwards: !isNaN(props.appHeight) ? props.appHeight - 70 : 0,
       deletedclasses: [],
@@ -2918,7 +2919,8 @@ class Data extends React.Component {
     return {
       community: async () => {
         //console.log("try", communityName);
-        if (!recordedCommunityNames.includes(communityName)) {
+        if (!this.state.communities.find((x) => x.message === communityName)) {
+          //if (!recordedCommunityNames.includes(communityName)) {
           this.setState({
             recordedCommunityNames: [...recordedCommunityNames, communityName]
           });
@@ -2928,7 +2930,7 @@ class Data extends React.Component {
               where("messageLower", "==", communityName.toLowerCase())
             ),
             (querySnapshot) => {
-              querySnapshot.docs.forEach((doc) => {
+              querySnapshot.docs.forEach(async (doc) => {
                 if (doc.exists()) {
                   var community = doc.data();
                   community.id = doc.id;
@@ -2939,6 +2941,22 @@ class Data extends React.Component {
                         .collection("communities")
                         .doc(community.id)
                         .update({ messageLower });*/
+                  community.adminProfiled =
+                    community.admin &&
+                    (await Promise.all(
+                      community.admin.map(async (requestId) => {
+                        var perp = await this.hydrateUser(requestId).user();
+                        return perp && JSON.parse(perp);
+                      })
+                    ));
+                  community.delegatesProfiled =
+                    community.faculty &&
+                    (await Promise.all(
+                      community.faculty.map(async (requestId) => {
+                        var perp = await this.hydrateUser(requestId).user();
+                        return perp && JSON.parse(perp);
+                      })
+                    ));
                   var rest = this.state.communities.filter(
                     (x) => x.id !== community.id
                   );
@@ -2961,7 +2979,7 @@ class Data extends React.Component {
                 if (querySnapshot.empty) {
                   return resolve("{}");
                 } else
-                  querySnapshot.docs.forEach((doc) => {
+                  querySnapshot.docs.forEach(async (doc) => {
                     if (doc.exists()) {
                       var community = doc.data();
 
@@ -2970,6 +2988,23 @@ class Data extends React.Component {
                       var rest = this.state.communities.filter(
                         (x) => x.id !== community.id
                       );
+                      community.adminProfiled =
+                        community.admin &&
+                        (await Promise.all(
+                          community.admin.map(async (requestId) => {
+                            var perp = await this.hydrateUser(requestId).user();
+                            return perp && JSON.parse(perp);
+                          })
+                        ));
+
+                      community.delegatesProfiled =
+                        community.faculty &&
+                        (await Promise.all(
+                          community.faculty.map(async (requestId) => {
+                            var perp = await this.hydrateUser(requestId).user();
+                            return perp && JSON.parse(perp);
+                          })
+                        ));
                       this.setState({ communities: [...rest, community] });
                       return community && resolve(JSON.stringify(community));
                     } else return resolve("{}");
@@ -4546,4 +4581,3 @@ export default React.forwardRef((props, ref) => (
         UPDATABLE = true;
         return { docs, startAfter, endBefore, close,UPDATABLE };
       }*/
-
