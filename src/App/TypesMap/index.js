@@ -193,7 +193,7 @@ class ForumType extends React.Component {
           {notBlocked("ordinances") && (
             <OrdinanceImg commtype={commtype} maxWidth={width} />
           )}
-          {false && notBlocked("budget") && (
+          {notBlocked("budget") && (
             <BudgetProposalImg commtype={commtype} maxWidth={width} />
           )}
           {notBlocked("elections") && (
