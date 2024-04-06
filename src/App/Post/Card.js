@@ -74,6 +74,7 @@ class Card extends React.Component {
         //console.log("post", parent.id);
         return (
           <Post
+            setFoundation={this.props.setFoundation}
             isProfile={this.props.isProfile}
             chosenPost={this.props.chosenPost}
             findPost={this.props.findPost}
