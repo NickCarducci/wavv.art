@@ -187,7 +187,7 @@ class ForumType extends React.Component {
           }}
         >
           <NewCommPostImg commtype={commtype} maxWidth={width} />
-          {false && notBlocked("forms & permits") && (
+          {notBlocked("forms & permits") && (
             <FormsAndPermitsImg commtype={commtype} maxWidth={width} />
           )}
           {notBlocked("ordinances") && (
