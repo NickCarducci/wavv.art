@@ -145,6 +145,7 @@ class NotProfile extends React.Component {
           </Link>
           <div
             style={{
+              display: "none",
               color: color ? "white" : "grey",
               padding: "3px 10px"
             }}
@@ -248,3 +249,4 @@ export default NotProfile;
   >
     {parent.viewCount}
   </i>*/
+
