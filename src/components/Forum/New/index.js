@@ -327,6 +327,8 @@ class NewForum extends React.Component {
             "event",
             "election",
             "ordinance",
+            "budget",
+            "form",
             "class",
             "case",
             "department",
@@ -346,6 +348,8 @@ class NewForum extends React.Component {
               this.props.community[key].includes(this.props.auth.uid);
             if (
               ![
+                "budget",
+                "form",
                 "ordinance",
                 "election",
                 "department",
@@ -413,3 +417,4 @@ export default NewForum;
 
     document.body.appendChild(script);
   };*/
+
