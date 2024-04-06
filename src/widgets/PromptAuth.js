@@ -226,6 +226,7 @@ class PromptAuth extends React.Component {
                   aut
                 );
               if (!aut) {
+                return null;
                 var answer = window.confirm("login?");
                 if (answer) return this.props.onPromptToLogin();
                 anon &&
