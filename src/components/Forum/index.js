@@ -2099,6 +2099,7 @@ class Forum extends React.Component {
         }
         {ownerOpen && (
           <Addadmin
+            hydrateUser={this.props.hydrateUser}
             editingSomeText={this.state.editingSomeText}
             columncount={columncount}
             postHeight={postHeight}
@@ -2672,6 +2673,7 @@ class Forum extends React.Component {
                     }}
                   >
                     <Card
+                      setFoundation={this.props.setFoundation}
                       //first={this.state.onlyCommunity!==""?0:i}
                       chainId={parent.chainId}
                       vintageOfKeys={this.props.vintageOfKeys}
