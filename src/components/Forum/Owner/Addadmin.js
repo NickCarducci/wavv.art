@@ -64,7 +64,8 @@ class Addadmin extends React.Component {
               color: "rgb(190,210,210)"
             }}
           >
-            Add someone to help manage your faculty, budget, elections & cases{" "}
+            Add someone to help manage your faculty, budget, forms, ordinances,
+            elections & cases{" "}
             <div style={{ color: "rgb(170,220,220)", fontSize: "12px" }}>
               only you control
             </div>
