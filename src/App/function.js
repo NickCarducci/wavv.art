@@ -669,7 +669,7 @@ class Function extends React.Component {
       () => {
         //this.props.setFoundation({ forumOpen: true });
         clearTimeout(this.closer);
-        this.closer = setTimeout(() => this.onSearcher(searching), 2000);
+        this.closer = setTimeout(() => this.onSearcher(searching), 500);
       } /*
       if (searching === "" || !this.props.forumOpen)
         if (searching !== "") {
@@ -794,7 +794,7 @@ class Function extends React.Component {
                       alert("please try another city name");
                     });
               });
-          }, 1200);
+          }, 500);
         }
       });
     } else {
@@ -1481,6 +1481,7 @@ class Function extends React.Component {
           forumOpen={this.props.forumOpen}
         />
         <Forum
+          hydrateUser={this.props.hydrateUser}
           showNew={this.state.showNew}
           openFilters={() => {
             this.props.openFilters();
@@ -1494,7 +1495,6 @@ class Function extends React.Component {
           chosenPost={this.props.chosenPost}
           findPost={this.props.findPost}
           getCommunity={this.props.getCommunity}
-          hydrateUser={this.props.hydrateUser}
           setForumDocs={this.props.setForumDocs}
           paginationhandle={this.props.paginationhandle}
           profile={profile}
