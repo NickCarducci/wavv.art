@@ -275,6 +275,8 @@ class NewForum extends React.Component {
           "forum",
           "department",
           "class",
+          "budget",
+          "form",
           "ordinance",
           "election",
           "case"
