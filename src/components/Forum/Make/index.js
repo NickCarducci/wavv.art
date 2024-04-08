@@ -535,6 +535,7 @@ class Make extends React.PureComponent {
       }
     }
   };
+
   render() {
     const { eventDate } = this.state;
     const numberEntered = /^[\d]/;
@@ -1235,7 +1236,7 @@ class Make extends React.PureComponent {
                   if (this.props.auth === undefined)
                     return window.alert("please login to view your files");
                   if (!this.state.files)
-                    this.getFiles(this.state.pathReference);
+                    this.getFiles(`personalCaptures/${this.props.auth.uid}/*`);
                   this.setState(
                     {
                       noPexels: !this.state.noPexels,
