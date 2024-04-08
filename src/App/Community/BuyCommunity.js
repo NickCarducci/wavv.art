@@ -418,24 +418,10 @@ class BuyCommunity extends React.Component {
                       Members-only. No frills, just
                       <br />
                       <div>
-                        •{" "}
-                        <span
-                          style={{
-                            textDecoration: "line-through"
-                          }}
-                        >
-                          file-upload
-                        </span>
+                        • file-upload
                         <br />
                         • forum
-                        <br />•{" "}
-                        <span
-                          style={{
-                            textDecoration: "line-through"
-                          }}
-                        >
-                          voting
-                        </span>
+                        <br />• voting
                       </div>
                       <br />
                     </div>
