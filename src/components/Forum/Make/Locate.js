@@ -13,9 +13,9 @@ const firestore = getFirestore(firebase);
 class Locate extends React.Component {
   state = {
     commQuery: "",
-    addressQuery: "",
     predictions: [],
-    communities: []
+    communities: [],
+    locationType: "city"
   };
   queryCommunities = (q) => {
     console.log("commQuery", q);
@@ -91,13 +91,7 @@ class Locate extends React.Component {
     const space = " ";
     console.log("communities", communities);
     return (
-      <div
-        className={
-          numberEntered.test(addressQuery)
-            ? "eventnewcitysearchfilled"
-            : "eventnewcitysearch"
-        }
-      >
+      <div>
         {place_name || chosenCommunity ? (
           <div />
         ) : (
@@ -106,7 +100,6 @@ class Locate extends React.Component {
             style={{
               color: "rgb(200,120,120)",
               fontSize: "15px",
-              border: "2px solid",
               borderRadius: "9px",
               padding: "4px",
               margin: "2px"
@@ -118,75 +111,26 @@ class Locate extends React.Component {
             address
           </div>
         )}
-        <div className="seachboxthing">
-          {place_name}
-          <div>
-            <div
-              style={{
-                userSelect: "none",
-                display: "flex",
-                width: "100%",
-                justifyContent: "space-evenly"
-              }}
-            >
-              <div
-                style={{
-                  color: this.state.locationType === "city" ? "" : "grey",
-                  fontSize: "12px",
-                  border: "2px solid",
-                  borderRadius: "9px",
-                  padding: "4px",
-                  margin: "2px"
-                }}
-                onClick={() =>
-                  this.setState({
-                    locationType: !this.state.locationType && "city"
-                  })
-                }
-              >
-                Address
-              </div>
-              <div
-                style={{
-                  color: this.state.locationType === "community" ? "" : "grey",
-                  fontSize: "12px",
-                  border: "2px solid",
-                  borderRadius: "9px",
-                  padding: "4px",
-                  margin: "2px"
-                }}
-                onClick={() =>
-                  this.setState({
-                    locationType: !this.state.locationType && "community"
-                  })
-                }
-              >
-                Community
-              </div>
-            </div>
-            {this.state.locationType === "city" ? (
-              <input
-                placeholder="Address"
-                value={this.state.addressQuery}
-                onChange={(e) =>
-                  this.setState({
-                    addressQuery: specialFormatting(e.target.value, true)
-                  })
-                }
-              />
-            ) : this.state.locationType === "community" ? (
-              <input
-                placeholder="Community"
-                value={this.state.commQuery}
-                onChange={(e) =>
-                  this.setState({
-                    commQuery: specialFormatting(e.target.value)
-                  })
-                }
-              />
-            ) : null}
-          </div>
-        </div>
+        {place_name}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            this.onSearchChange();
+          }}
+        >
+          <input
+            style={{
+              color: "grey"
+            }}
+            placeholder="Address"
+            value={this.state.addressQuery}
+            onChange={(e) =>
+              this.setState({
+                addressQuery: specialFormatting(e.target.value, true)
+              })
+            }
+          />
+        </form>
 
         {place_name !== "" ? (
           <div
@@ -210,22 +154,7 @@ class Locate extends React.Component {
               );
             })
           ) : (
-            "none, try an address place_name"
-          )
-        ) : this.state.locationType === "community" ? (
-          communities && communities.length > 0 ? (
-            communities.map((prediction) => {
-              return (
-                <div
-                  onClick={() => this.props.selectAddress(prediction)}
-                  className="citypredictionsevent"
-                >
-                  ={prediction.message}
-                </div>
-              );
-            })
-          ) : (
-            "none, try a community name"
+            ""
           )
         ) : (
           "Search"
