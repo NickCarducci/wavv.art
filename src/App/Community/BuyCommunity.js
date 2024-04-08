@@ -406,8 +406,9 @@ class BuyCommunity extends React.Component {
               </p>
               <p>
                 {this.state.justForum ? (
-                  <span
+                  <div
                     style={{
+                      display: "block",
                       color: "black",
                       fontSize: "17px",
                       marginTop: "10px"
@@ -415,7 +416,14 @@ class BuyCommunity extends React.Component {
                   >
                     "Your own virtual sanctuary"
                     <div>
-                      Members-only. No frills, just
+                      <span
+                        style={{
+                          textDecoration: "line-through"
+                        }}
+                      >
+                        Members-only
+                      </span>
+                      . No frills, just
                       <br />
                       <div>
                         • file-upload
@@ -425,7 +433,7 @@ class BuyCommunity extends React.Component {
                       </div>
                       <br />
                     </div>
-                  </span>
+                  </div>
                 ) : (
                   <span
                     style={{
