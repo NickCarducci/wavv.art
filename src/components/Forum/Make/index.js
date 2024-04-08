@@ -1420,7 +1420,7 @@ class Make extends React.PureComponent {
         {this.props.initial === "event" && (
           <div
             style={{
-              display: "inline-block",
+              display: "none",
               margin: "5px",
               fontSize: "15px",
               position: "relative",
