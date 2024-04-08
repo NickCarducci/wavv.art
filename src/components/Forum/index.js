@@ -1476,17 +1476,11 @@ class Forum extends React.Component {
                 >
                   Login
                 </Link>{" "}
-                to forge vintages and/or{" "}
-                <a
-                  style={{
-                    color: "white"
-                  }}
-                  href="https://thumbprint.quora.com/Why-are-pay-as-you-go-transaction-based-marketplace-platforms-forced-to-use-Stripes-money-services-processor"
-                >
-                  bank
-                </a>
+                to build communities or post
               </div>
-            ) : null /*(
+            ) : null /*
+            https://thumbprint.quora.com/Why-are-pay-as-you-go-transaction-based-marketplace-platforms-forced-to-use-Stripes-money-services-processor
+            (
             <Vintages
               firestore={firestore}
               //ref={{ current: { Vintages: this.Vintages } }}
