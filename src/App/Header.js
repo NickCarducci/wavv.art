@@ -116,7 +116,7 @@ class Words extends React.Component {
           //onBlur={this.props.blurSearching}
           className="editcolorheader"
           style={{
-            backgroundColor: !focusSuggest ? "rgba(30,20,30,.4)" : "",
+            backgroundColor: !focusSuggest ? "rgba(30,20,30)" : "",
             userSelect: "text",
             display: "flex",
             position: "relative",
@@ -144,7 +144,7 @@ class Words extends React.Component {
                 this.props.blurSearching();
                 this.delayed.current.blur();
                 this.typing = null;
-              }, 2000);
+              }, 500);
             } else this.typing = true;
           }}
         />
