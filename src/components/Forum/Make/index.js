@@ -692,48 +692,7 @@ class Make extends React.PureComponent {
       };
     //console.log("coords", this.state.center);
     return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const chosenPhoto = this.state.fileUrl
-            ? this.state.fileUrl
-            : this.state.chosenPhoto;
-          if (this.props.initial !== "plan" && !chosenPhoto) return null;
-
-          if (
-            this.state.place_name ||
-            this.state.community ||
-            this.props.initial === "plan"
-          ) {
-            var title = this.state.title;
-            if (this.props.initial !== "plan" && !this.state.checkIn)
-              return this.setState({
-                images: [],
-                checkIn: true,
-                createdAt: new Date()
-              });
-            var answer = window.confirm(
-              "Want to call the " + this.props.initial + " " + title + "?"
-            );
-            if (!answer) {
-              title = window.prompt("Title");
-              if (!title) return null;
-              return this.setState({
-                title: specialFormatting(title)
-              });
-            }
-            if (this.props.auth === undefined)
-              return window.alert("please sign in");
-            if (this.props.initial === "plan") {
-              return this.planSubmit();
-            }
-            if (this.state.communityId)
-              return checkComms(this.state.communityId);
-            if (this.state.place_name) return citycheck(this.state.place_name);
-            console.log("no location");
-          } else window.alert("Please provide an event address");
-        }}
+      <div
         style={{
           //display: this.props.materialDateOpen ? "none" : "block",
           position: "relative",
@@ -794,578 +753,634 @@ class Make extends React.PureComponent {
           //withPortal
           //portalId="root-portal"
         />*/}
-        <div
-          style={{
-            position: "relative",
-            alignItems: "center",
-            width: "100%",
-            //minHeight: "356px",
-            backgroundColor:
-              this.props.initial === "plan" ? "#2fbaff" : "#be52ff",
-            color: `rgba(255, 255, 255, ${this.props.success ? 0.644 : 1})`,
-            fontSize: "26px"
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const chosenPhoto = this.state.fileUrl
+              ? this.state.fileUrl
+              : this.state.chosenPhoto;
+            if (this.props.initial !== "plan" && !chosenPhoto) return null;
+
+            if (
+              this.state.place_name ||
+              this.state.community ||
+              this.props.initial === "plan"
+            ) {
+              var title = this.state.title;
+              if (this.props.initial !== "plan" && !this.state.checkIn)
+                return this.setState({
+                  images: [],
+                  checkIn: true,
+                  createdAt: new Date()
+                });
+              var answer = window.confirm(
+                "Want to call the " + this.props.initial + " " + title + "?"
+              );
+              if (!answer) {
+                title = window.prompt("Title");
+                if (!title) return null;
+                return this.setState({
+                  title: specialFormatting(title)
+                });
+              }
+              if (this.props.auth === undefined)
+                return window.alert("please sign in");
+              if (this.props.initial === "plan") {
+                return this.planSubmit();
+              }
+              if (this.state.communityId)
+                return checkComms(this.state.communityId);
+              if (this.state.place_name)
+                return citycheck(this.state.place_name);
+              console.log("no location");
+            } else window.alert("Please provide an event address");
           }}
         >
-          {["plan", "event"].includes(this.props.initial) && "hours:"}
-          {space}
-          {["plan", "event"].includes(this.props.initial) && (
-            <input
-              step=".1"
-              type="number"
-              style={{
-                width: "50px",
-                height: "18px",
-                backgroundColor: "transparent",
-                border: "none",
-                color: "white",
-                fontSize: "20px"
-              }}
-              onChange={(e) => {
-                const rangeChosen = e.target.value;
-                rangeChosen > 0 && this.setState({ rangeChosen });
-              }}
-              value={this.state.rangeChosen}
-            />
-          )}
-          {/*this.props.success
+          <div
+            style={{
+              position: "relative",
+              alignItems: "center",
+              width: "100%",
+              //minHeight: "356px",
+              backgroundColor:
+                this.props.initial === "plan" ? "#2fbaff" : "#be52ff",
+              color: `rgba(255, 255, 255, ${this.props.success ? 0.644 : 1})`,
+              fontSize: "26px"
+            }}
+          >
+            {["plan", "event"].includes(this.props.initial) && "hours:"}
+            {space}
+            {["plan", "event"].includes(this.props.initial) && (
+              <input
+                step=".1"
+                type="number"
+                style={{
+                  width: "50px",
+                  height: "18px",
+                  backgroundColor: "transparent",
+                  border: "none",
+                  color: "white",
+                  fontSize: "20px"
+                }}
+                onChange={(e) => {
+                  const rangeChosen = e.target.value;
+                  rangeChosen > 0 && this.setState({ rangeChosen });
+                }}
+                value={this.state.rangeChosen}
+              />
+            )}
+            {/*this.props.success
             ? `${this.props.title} created!`
           : this.props.initial*/}
-          <img
-            src={settings}
-            style={{
-              zIndex: 1,
-              position: "absolute",
-              right: "0px",
-              margin: "8px",
-              height: "18px"
-            }}
-            onClick={() => {
-              this.setState({ openDetails: !this.state.openDetails });
-            }}
-            alt="settings"
-          />
-        </div>
-        {this.state.noPexels && (
-          <input
-            key={this.state.clear ? 0 : 1}
-            style={{
-              margin: "3px",
-              maxWidth: "calc(100% - 6px)",
-              width: "min-content",
-              borderRadius: "2px"
-              //border: "3px solid blue"
-            }}
-            type="file"
-            onChange={(event) => {
-              // Update the state
-              // const fileReader = new window.FileReader();
-              var answer = window.confirm("begin upload?");
-              if (answer) {
-                const { pathReference } = this.state;
-                var file = event.target.files[0];
-                if (file) {
-                  const { type } = file;
-                  console.log("file " + type, file);
-                  if (
-                    type === "image"
-                    //["application/pdf", "video"].includes(type)
-                  ) {
-                    const blob = new Blob([file], {
-                        type //"video/mp4"
-                      }),
-                      url = this.URL.createObjectURL(blob);
-                    console.log("blob url", url);
-                    this.setState({ file, url, blob }, () => {
-                      //const { newPhoto } = this.state;
-                      if (!file.title) return null;
-                      if (file.title.includes("/"))
-                        return window.alert("/ forbidden in title");
-                      console.log("newPhoto type", file.type);
-                      var filename = file.title; //+ x.type.split("/")[1].toLowerCase();
-                      var itemRef = this.storageRef.child(
-                        pathReference + "/" + filename
-                      );
-                      itemRef
-                        .put(file.blob)
-                        .then((snapshot) => {
-                          console.log(snapshot);
-                          console.log(
-                            `${filename}.${file.type.split("/")[1]}` +
-                              " added to " +
-                              pathReference
-                          );
-                          if (
-                            this.props.videos &&
-                            this.props.videos.length > 0
-                          ) {
-                            //var folderReference = `personalCaptures/${this.props.auth.uid}/*`;
-
-                            this.getFolders(pathReference);
-                          }
-                          this.getFiles(pathReference);
-                        })
-                        .catch((err) => console.log(err.title));
-                    });
-                  } else return window.alert(`unsupported file type ${type}`);
-                }
-              }
-            }}
-          />
-        )}
-        {this.state.noPexels && (
-          <div style={{ columnCount: "3" }}>
-            {this.state.files &&
-              this.state.files.map((file) => {
-                const revert = (x) => {
-                    updateMetadata(x.ref, {
-                      customMetadata: {
-                        public: false
-                      },
-                      metadata: {
-                        description: "no description",
-                        modified: new Date()
-                      }
-                    })
-                      .then(() => this.props.unloadGreenBlue())
-                      .catch((err) => console.log(err.message));
-                  },
-                  confirmRating = (x) => {
-                    updateMetadata(x.ref, {
-                      customMetadata: {
-                        ageAppropriate: true
-                      },
-                      metadata: {
-                        description: "no description",
-                        modified: new Date()
-                      }
-                    })
-                      .then(() => {
-                        this.props.unloadGreenBlue();
-                        var folderReference = `personalCaptures/${this.props.auth.uid}`;
-                        //this.props.getFolders(folderReference);
-                        var pathReference = `${folderReference}/${"*"}`;
-                        this.getFiles(pathReference);
-                      })
-                      .catch((err) => console.log(err.message));
-                  },
-                  applyApropos = (x) => {
-                    this.props.loadGreenBlue("sending to deepai for rating...");
-                    //return console.log(x);
-
-                    updateMetadata(x.ref, {
-                      customMetadata: {
-                        public: true
-                      },
-                      metadata: {
-                        description: "no description",
-                        modified: new Date()
-                      }
-                    })
-                      .then(async () => {
-                        if (
-                          !x.metadata ||
-                          !x.metadata.customMetadata ||
-                          !x.metadata.customMetadata.ageAppropriate
-                        ) {
-                          this.deepai = window.deepai;
-                          this.deepai.setApiKey(
-                            "fbc3602b-4af4-4b5e-81fb-8a4407b75eab"
-                          );
-                          var output = await this.deepai.callStandardApi(
-                            "content-moderation",
-                            {
-                              image: x.gsUrl
-                            }
-                          );
-                          var result = output.output;
-                          if (result) {
-                            console.log(result);
+            <img
+              src={settings}
+              style={{
+                zIndex: 1,
+                position: "absolute",
+                right: "0px",
+                margin: "8px",
+                height: "18px"
+              }}
+              onClick={() => {
+                this.setState({ openDetails: !this.state.openDetails });
+              }}
+              alt="settings"
+            />
+          </div>
+          {this.state.noPexels && (
+            <input
+              key={this.state.clear ? 0 : 1}
+              style={{
+                margin: "3px",
+                maxWidth: "calc(100% - 6px)",
+                width: "min-content",
+                borderRadius: "2px"
+                //border: "3px solid blue"
+              }}
+              type="file"
+              onChange={(event) => {
+                // Update the state
+                // const fileReader = new window.FileReader();
+                var answer = window.confirm("begin upload?");
+                if (answer) {
+                  const { pathReference } = this.state;
+                  var file = event.target.files[0];
+                  if (file) {
+                    const { type } = file;
+                    console.log("file " + type, file);
+                    if (
+                      type === "image"
+                      //["application/pdf", "video"].includes(type)
+                    ) {
+                      const blob = new Blob([file], {
+                          type //"video/mp4"
+                        }),
+                        url = this.URL.createObjectURL(blob);
+                      console.log("blob url", url);
+                      this.setState({ file, url, blob }, () => {
+                        //const { newPhoto } = this.state;
+                        if (!file.title) return null;
+                        if (file.title.includes("/"))
+                          return window.alert("/ forbidden in title");
+                        console.log("newPhoto type", file.type);
+                        var filename = file.title; //+ x.type.split("/")[1].toLowerCase();
+                        var itemRef = this.storageRef.child(
+                          pathReference + "/" + filename
+                        );
+                        itemRef
+                          .put(file.blob)
+                          .then((snapshot) => {
+                            console.log(snapshot);
                             console.log(
-                              "deepai nudity score " + result.nsfw_score
+                              `${filename}.${file.type.split("/")[1]}` +
+                                " added to " +
+                                pathReference
                             );
-                            if (result.nsfw_score > 0.7) {
-                              window.alert(
-                                "we cannot store this video, it does not pass our nudity test"
-                              );
-                              //move to pouchdb
-                              //delete from cloud storage
-                            } else if (result.nsfw_score) {
-                              confirmRating(x);
-                            } else {
-                              revert(x);
-                              return window.alert(result);
+                            if (
+                              this.props.videos &&
+                              this.props.videos.length > 0
+                            ) {
+                              //var folderReference = `personalCaptures/${this.props.auth.uid}/*`;
+
+                              this.getFolders(pathReference);
                             }
-                          } else {
-                            revert(x);
-                            return window.alert(
-                              "file moderation analysis error, will not add ageAppropriate tag"
-                            );
-                          }
-                        } else {
-                          confirmRating(x);
+                            this.getFiles(pathReference);
+                          })
+                          .catch((err) => console.log(err.title));
+                      });
+                    } else return window.alert(`unsupported file type ${type}`);
+                  }
+                }
+              }}
+            />
+          )}
+          {this.state.noPexels && (
+            <div style={{ columnCount: "3" }}>
+              {this.state.files &&
+                this.state.files.map((file) => {
+                  const revert = (x) => {
+                      updateMetadata(x.ref, {
+                        customMetadata: {
+                          public: false
+                        },
+                        metadata: {
+                          description: "no description",
+                          modified: new Date()
                         }
                       })
-                      .catch((err) => console.log(err.message));
-                  };
-                return file.type === "video" ? (
-                  <video></video>
-                ) : (
-                  <div style={{ position: "relative" }}>
-                    <div
-                      //airplane air plane
-                      //className="fa fa-send-o"
-                      style={{
-                        fontWeight: "border",
-                        zIndex: "9999",
-                        color:
-                          file.metadata &&
-                          file.metadata.customMetadata &&
-                          file.metadata.customMetadata.ageAppropriate
-                            ? "lightskyblue"
-                            : "white",
-                        borderRadius: "6px",
-                        padding: "2px",
-                        left: "8px",
-                        top: "8px",
-                        fontSize: "12px",
-                        position: "absolute",
-                        backgroundColor: "rgb(20,20,30)",
-                        border: "2px solid"
-                      }}
-                      onClick={
-                        !file.metadata ||
-                        !file.metadata.customMetadata ||
-                        !file.metadata.customMetadata.public
-                          ? () => applyApropos(file)
-                          : () =>
-                              this.setState({
-                                noPexels: false,
-                                fileUrl: file.gsUrl
+                        .then(() => this.props.unloadGreenBlue())
+                        .catch((err) => console.log(err.message));
+                    },
+                    confirmRating = (x) => {
+                      updateMetadata(x.ref, {
+                        customMetadata: {
+                          ageAppropriate: true
+                        },
+                        metadata: {
+                          description: "no description",
+                          modified: new Date()
+                        }
+                      })
+                        .then(() => {
+                          this.props.unloadGreenBlue();
+                          var folderReference = `personalCaptures/${this.props.auth.uid}`;
+                          //this.props.getFolders(folderReference);
+                          var pathReference = `${folderReference}/${"*"}`;
+                          this.getFiles(pathReference);
+                        })
+                        .catch((err) => console.log(err.message));
+                    },
+                    applyApropos = (x) => {
+                      this.props.loadGreenBlue(
+                        "sending to deepai for rating..."
+                      );
+                      //return console.log(x);
+
+                      updateMetadata(x.ref, {
+                        customMetadata: {
+                          public: true
+                        },
+                        metadata: {
+                          description: "no description",
+                          modified: new Date()
+                        }
+                      })
+                        .then(async () => {
+                          if (
+                            !x.metadata ||
+                            !x.metadata.customMetadata ||
+                            !x.metadata.customMetadata.ageAppropriate
+                          ) {
+                            this.deepai = window.deepai;
+                            this.deepai.setApiKey(
+                              "fbc3602b-4af4-4b5e-81fb-8a4407b75eab"
+                            );
+                            var output = await this.deepai.callStandardApi(
+                              "content-moderation",
+                              {
+                                image: x.gsUrl
+                              }
+                            );
+                            var result = output.output;
+                            if (result) {
+                              console.log(result);
+                              console.log(
+                                "deepai nudity score " + result.nsfw_score
+                              );
+                              if (result.nsfw_score > 0.7) {
+                                window.alert(
+                                  "we cannot store this video, it does not pass our nudity test"
+                                );
+                                //move to pouchdb
+                                //delete from cloud storage
+                              } else if (result.nsfw_score) {
+                                confirmRating(x);
+                              } else {
+                                revert(x);
+                                return window.alert(result);
+                              }
+                            } else {
+                              revert(x);
+                              return window.alert(
+                                "file moderation analysis error, will not add ageAppropriate tag"
+                              );
+                            }
+                          } else {
+                            confirmRating(x);
+                          }
+                        })
+                        .catch((err) => console.log(err.message));
+                    };
+                  return file.type === "video" ? (
+                    <video></video>
+                  ) : (
+                    <div style={{ position: "relative" }}>
+                      <div
+                        //airplane air plane
+                        //className="fa fa-send-o"
+                        style={{
+                          fontWeight: "border",
+                          zIndex: "9999",
+                          color:
+                            file.metadata &&
+                            file.metadata.customMetadata &&
+                            file.metadata.customMetadata.ageAppropriate
+                              ? "lightskyblue"
+                              : "white",
+                          borderRadius: "6px",
+                          padding: "2px",
+                          left: "8px",
+                          top: "8px",
+                          fontSize: "12px",
+                          position: "absolute",
+                          backgroundColor: "rgb(20,20,30)",
+                          border: "2px solid"
+                        }}
+                        onClick={
+                          !file.metadata ||
+                          !file.metadata.customMetadata ||
+                          !file.metadata.customMetadata.public
+                            ? () => applyApropos(file)
+                            : () =>
+                                this.setState({
+                                  noPexels: false,
+                                  fileUrl: file.gsUrl
+                                })
+                        }
+                      >
+                        {"^"}
+                      </div>
+                      <div
+                        //airplane air plane
+                        //className="fa fa-send-o"
+                        style={{
+                          fontWeight: "border",
+                          zIndex: "9999",
+                          color:
+                            file.metadata &&
+                            file.metadata.customMetadata &&
+                            file.metadata.customMetadata.ageAppropriate
+                              ? "lightskyblue"
+                              : "white",
+                          borderRadius: "6px",
+                          padding: "2px",
+                          right: "8px",
+                          top: "8px",
+                          fontSize: "12px",
+                          position: "absolute",
+                          backgroundColor: "rgb(20,20,30)",
+                          border: "2px solid"
+                        }}
+                        onClick={() => {
+                          const desertRef = ref(
+                            storage,
+                            file.metadata.fullPath
+                          );
+                          var answer = window.confirm("Delete?");
+                          answer &&
+                            deleteObject(desertRef)
+                              .then(() => {
+                                // File deleted successfully
                               })
-                      }
-                    >
-                      {"^"}
+                              .catch((error) => {
+                                // Uh-oh, an error occurred!
+                              });
+                        }}
+                      >
+                        &times;
+                      </div>
+                      <img
+                        src={file.gsUrl}
+                        alt={file.name}
+                        style={{ width: "100%" }}
+                      />
                     </div>
-                    <div
-                      //airplane air plane
-                      //className="fa fa-send-o"
-                      style={{
-                        fontWeight: "border",
-                        zIndex: "9999",
-                        color:
-                          file.metadata &&
-                          file.metadata.customMetadata &&
-                          file.metadata.customMetadata.ageAppropriate
-                            ? "lightskyblue"
-                            : "white",
-                        borderRadius: "6px",
-                        padding: "2px",
-                        right: "8px",
-                        top: "8px",
-                        fontSize: "12px",
-                        position: "absolute",
-                        backgroundColor: "rgb(20,20,30)",
-                        border: "2px solid"
-                      }}
-                      onClick={() => {
-                        const desertRef = ref(storage, file.metadata.fullPath);
-                        var answer = window.confirm("Delete?");
-                        answer &&
-                          deleteObject(desertRef)
-                            .then(() => {
-                              // File deleted successfully
-                            })
-                            .catch((error) => {
-                              // Uh-oh, an error occurred!
-                            });
-                      }}
-                    >
-                      &times;
-                    </div>
-                    <img
-                      src={file.gsUrl}
-                      alt={file.name}
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                );
-              })}
-          </div>
-        )}
-        <div
-          style={{
-            display: this.state.files && this.state.noPexels ? "flex" : "none",
-            justifyContent: "space-around"
-          }}
-        >
-          <div
-            style={{
-              padding: "10px"
-            }}
-            onClick={() => {
-              this.getFiles(this.state.pathReference);
-            }}
-          >
-            {"<"}
-          </div>
-          <div
-            style={{
-              padding: "10px"
-            }}
-            onClick={() => {
-              this.getFiles(this.state.pathReference, this.state.pageToken);
-            }}
-          >
-            {">"}
-          </div>
-        </div>
-        <div style={{ position: "relative" }}>
-          {this.state.typing ? (
-            <div
-              style={{
-                zIndex: "1",
-                position: "absolute",
-                backgroundColor: "#999",
-                width: "100%",
-                height: "100px"
-              }}
-            >
-              <div className="loadingAuthScreen1">
-                <div />
-              </div>
-            </div>
-          ) : null}
-          <div className="pexelsmemo">
-            Photos provided by <a href="https://www.pexels.com/">Pexels</a>
-          </div>
-          {this.state.chosenPhoto && (
-            <div
-              style={{
-                color: "white",
-                zIndex: "1",
-                position: "absolute",
-                bottom: "10px",
-                right: "10px",
-                fontSize: "20px"
-              }}
-              onClick={() =>
-                this.setState({
-                  title: "",
-                  chosenPhoto: null,
-                  images: []
-                })
-              }
-            >
-              &times;
+                  );
+                })}
             </div>
           )}
-          {!this.state.noPexels && (
-            <input
-              //type="text"
-              value={this.state.title}
-              name="title"
-              id="title"
-              maxLength="24"
-              /*className={
+          <div
+            style={{
+              display:
+                this.state.files && this.state.noPexels ? "flex" : "none",
+              justifyContent: "space-around"
+            }}
+          >
+            <div
+              style={{
+                padding: "10px"
+              }}
+              onClick={() => {
+                this.getFiles(this.state.pathReference);
+              }}
+            >
+              {"<"}
+            </div>
+            <div
+              style={{
+                padding: "10px"
+              }}
+              onClick={() => {
+                this.getFiles(this.state.pathReference, this.state.pageToken);
+              }}
+            >
+              {">"}
+            </div>
+          </div>
+          <div style={{ position: "relative" }}>
+            {this.state.typing ? (
+              <div
+                style={{
+                  zIndex: "1",
+                  position: "absolute",
+                  backgroundColor: "#999",
+                  width: "100%",
+                  height: "100px"
+                }}
+              >
+                <div className="loadingAuthScreen1">
+                  <div />
+                </div>
+              </div>
+            ) : null}
+            <div className="pexelsmemo">
+              Photos provided by <a href="https://www.pexels.com/">Pexels</a>
+            </div>
+            {this.state.chosenPhoto && (
+              <div
+                style={{
+                  color: "white",
+                  zIndex: "1",
+                  position: "absolute",
+                  bottom: "10px",
+                  right: "10px",
+                  fontSize: "20px"
+                }}
+                onClick={() =>
+                  this.setState({
+                    title: "",
+                    chosenPhoto: null,
+                    images: []
+                  })
+                }
+              >
+                &times;
+              </div>
+            )}
+            {!this.state.noPexels && (
+              <input
+                //type="text"
+                value={this.state.title}
+                name="title"
+                id="title"
+                maxLength="24"
+                /*className={
                 !this.props.planInitial || noPexels
                   ? "titleofevento"
                   : "titleofeventp"
                 }*/
-              placeholder="Title"
-              //autoFocus={true}
-              autoComplete="off"
-              //onFocus={() => window.scrollTo(0, 0)}
-              //onClick={this.focus}
-              required
-              autoCorrect="off"
-              onChange={(e) => {
-                this.setState(
-                  {
-                    typing:
-                      !this.state.fileUrl &&
-                      !this.state.chosenPhoto &&
-                      this.props.initial !== "plan",
-                    pleaseNewClubname: false,
-                    title: specialFormatting(e.target.value)
-                  },
-                  () => {
-                    if (this.state.title === "")
-                      return this.setState({ typing: false });
-                    clearTimeout(this.timezout);
-                    this.timezout = setTimeout(() => {
-                      this.setState({ typing: false });
-                      if (this.state.fileUrl) return null;
-                      console.log("searching...", this.state.title);
-                      this.props.initial !== "plan" && this.queryPexels();
-                    }, 3000);
-                  }
-                );
-              }}
-              //onKeyUp={this.props.keyUp}
-              style={{
-                zIndex: "1",
-                position: "absolute",
-                width: "100%",
-                border: "none",
-                borderBottom: "1px dashed",
-                background:
-                  "linear-gradient(rgba(5,5,10,.6), rgba(250,250,250,0),rgba(250,250,250,0),rgba(250,250,250,0))",
+                placeholder="Title"
+                //autoFocus={true}
+                autoComplete="off"
+                //onFocus={() => window.scrollTo(0, 0)}
+                //onClick={this.focus}
+                required
+                autoCorrect="off"
+                onChange={(e) => {
+                  this.setState(
+                    {
+                      typing:
+                        !this.state.fileUrl &&
+                        !this.state.chosenPhoto &&
+                        this.props.initial !== "plan",
+                      pleaseNewClubname: false,
+                      title: specialFormatting(e.target.value)
+                    },
+                    () => {
+                      if (this.state.title === "")
+                        return this.setState({ typing: false });
+                      clearTimeout(this.timezout);
+                      this.timezout = setTimeout(() => {
+                        this.setState({ typing: false });
+                        if (this.state.fileUrl) return null;
+                        console.log("searching...", this.state.title);
+                        this.props.initial !== "plan" && this.queryPexels();
+                      }, 3000);
+                    }
+                  );
+                }}
+                //onKeyUp={this.props.keyUp}
+                style={{
+                  zIndex: "1",
+                  position: "absolute",
+                  width: "100%",
+                  border: "none",
+                  borderBottom: "1px dashed",
+                  background:
+                    "linear-gradient(rgba(5,5,10,.6), rgba(250,250,250,0),rgba(250,250,250,0),rgba(250,250,250,0))",
 
-                backgroundColor: "rgba(0, 0, 0, 0.7)",
-                fontSize: "26px",
-                color:
-                  !this.props.initial !== "plan" || noPexels
-                    ? "white"
-                    : "rgb(150,150,150)"
-              }}
-            />
-          )}
-          {this.props.initial !== "plan" && (
-            <div
-              onClick={() => {
-                if (this.props.auth === undefined)
-                  return window.alert("please login to view your files");
-                if (!this.state.files) this.getFiles(this.state.pathReference);
-                this.setState(
-                  { noPexels: !this.state.noPexels, fileUrl: null, images: [] },
-                  () => {}
-                );
-              }}
-              style={{
-                right: "0px",
-                borderRadius: "10px",
-                border: `${noPexels ? 1 : 0}px solid white`,
-                display: "flex",
-                zIndex: "1",
-                position: "absolute",
-                color: noPexels ? "white" : "rgb(150,150,150)",
-                top: "0px",
-                paddingRight: "15px",
-                paddingTop: "15px",
-                paddingLeft: "4px",
-                height: "21px",
-                width: "45px"
-              }}
-            >
-              +Pic
-            </div>
-          )}
-          {eventTypeChosen ? (
-            <div
-              style={{
-                color: "white",
-                bottom: "10px",
-                display: "flex",
-                zIndex: "1",
-                position: "absolute",
-                left: "15px"
-              }}
-            >
-              {diffDays === 0
-                ? `${WEEK_DAYS[eventDate.getDay()]} ${renderDate(eventDate)}`
-                : diffDays === -1
-                ? `${WEEK_DAYS[eventDate.getDay()]} ${renderDate(eventDate)}`
-                : diffDays === 1
-                ? `${WEEK_DAYS[eventDate.getDay()]} ${renderDate(eventDate)}`
-                : is_negative
-                ? `${WEEK_DAYS[eventDate.getDay()]} ${renderDate(eventDate)}`
-                : `${WEEK_DAYS[eventDate.getDay()]} ${renderDate(eventDate)}`}
-              <br />
-              {
-                diffDays === 0 ? renderTime(eventDate) : renderTime(eventDate) //note.date.toLocaleString([], { hour12: true })
-              }
-              ,&nbsp;
-              {diffDays === 0
-                ? `TODAY`
-                : diffDays === -1
-                ? `TOMORROW`
-                : diffDays === 1
-                ? `YESTERDAY`
-                : is_negative
-                ? `in ${Math.abs(diffDays)} days`
-                : `${diffDays} days ago`}
-            </div>
-          ) : null}
-          {this.state.chosenPhoto || this.state.fileUrl ? (
-            <img
-              style={{
-                color: "white",
-                position: "relative",
-                height: "auto",
-                width: "100%"
-              }}
-              src={
-                this.state.chosenPhoto
-                  ? this.state.chosenPhoto.src.large
-                  : this.state.fileUrl
-              }
-              alt={this.state.fileUrl ? this.state.fileUrl : "pexels"}
-            />
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                position: "relative",
-                textAlign: "center",
-                width: "100%",
-                height: "170px",
-                bottom: "0%",
-                color: "white",
-                backgroundColor: "rgba(0, 0, 0, 1)",
-                border: "none",
-                fontSize: "26px"
-              }}
-            />
-          )}
-        </div>
-        <div
-          style={{
-            background: "linear-gradient(black,rgba(0,0,0,.1))",
-            backgroundColor: "rgb(5,5,10)",
-            //minHeight: "150px",
-            display: "block",
-            position: "relative",
-            width: "100%",
-
-            columnCount: "3",
-            columnGap: "0"
-            //gridTemplateColumns: "1fr 1fr 1fr"
-          }}
-        >
-          {this.state.images ? (
-            this.state.images.map((image, i) => {
-              //console.log(image);
-              return (
-                <img
-                  key={i}
-                  onClick={() =>
-                    this.setState({
-                      chosenPhoto: image,
+                  backgroundColor: "rgba(0, 0, 0, 0.7)",
+                  fontSize: "26px",
+                  color:
+                    !this.props.initial !== "plan" || noPexels
+                      ? "white"
+                      : "rgb(150,150,150)"
+                }}
+              />
+            )}
+            {this.props.initial !== "plan" && (
+              <div
+                onClick={() => {
+                  if (this.props.auth === undefined)
+                    return window.alert("please login to view your files");
+                  if (!this.state.files)
+                    this.getFiles(this.state.pathReference);
+                  this.setState(
+                    {
+                      noPexels: !this.state.noPexels,
+                      fileUrl: null,
                       images: []
-                    })
-                  }
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    WebkitColumnBreakInside: "avoid",
-                    pageBreakInside: "avoid",
-                    breakInside: "avoid"
-                  }}
-                  src={image.src.medium}
-                  alt="error"
-                />
-              );
-            })
-          ) : (
-            <div>nothing for this title</div>
-          )}
-        </div>
-        {pleaseNewClubname && (
-          <div style={{ color: "white" }}>
-            Please choose another {this.props.initial} title, or make it
-            elsewhere than {pleaseNewClubname}
+                    },
+                    () => {}
+                  );
+                }}
+                style={{
+                  right: "0px",
+                  borderRadius: "10px",
+                  border: `${noPexels ? 1 : 0}px solid white`,
+                  display: "flex",
+                  zIndex: "1",
+                  position: "absolute",
+                  color: noPexels ? "white" : "rgb(150,150,150)",
+                  top: "0px",
+                  paddingRight: "15px",
+                  paddingTop: "15px",
+                  paddingLeft: "4px",
+                  height: "21px",
+                  width: "45px"
+                }}
+              >
+                +Pic
+              </div>
+            )}
+            {eventTypeChosen ? (
+              <div
+                style={{
+                  color: "white",
+                  bottom: "10px",
+                  display: "flex",
+                  zIndex: "1",
+                  position: "absolute",
+                  left: "15px"
+                }}
+              >
+                {diffDays === 0
+                  ? `${WEEK_DAYS[eventDate.getDay()]} ${renderDate(eventDate)}`
+                  : diffDays === -1
+                  ? `${WEEK_DAYS[eventDate.getDay()]} ${renderDate(eventDate)}`
+                  : diffDays === 1
+                  ? `${WEEK_DAYS[eventDate.getDay()]} ${renderDate(eventDate)}`
+                  : is_negative
+                  ? `${WEEK_DAYS[eventDate.getDay()]} ${renderDate(eventDate)}`
+                  : `${WEEK_DAYS[eventDate.getDay()]} ${renderDate(eventDate)}`}
+                <br />
+                {
+                  diffDays === 0 ? renderTime(eventDate) : renderTime(eventDate) //note.date.toLocaleString([], { hour12: true })
+                }
+                ,&nbsp;
+                {diffDays === 0
+                  ? `TODAY`
+                  : diffDays === -1
+                  ? `TOMORROW`
+                  : diffDays === 1
+                  ? `YESTERDAY`
+                  : is_negative
+                  ? `in ${Math.abs(diffDays)} days`
+                  : `${diffDays} days ago`}
+              </div>
+            ) : null}
+            {this.state.chosenPhoto || this.state.fileUrl ? (
+              <img
+                style={{
+                  color: "white",
+                  position: "relative",
+                  height: "auto",
+                  width: "100%"
+                }}
+                src={
+                  this.state.chosenPhoto
+                    ? this.state.chosenPhoto.src.large
+                    : this.state.fileUrl
+                }
+                alt={this.state.fileUrl ? this.state.fileUrl : "pexels"}
+              />
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  position: "relative",
+                  textAlign: "center",
+                  width: "100%",
+                  height: "170px",
+                  bottom: "0%",
+                  color: "white",
+                  backgroundColor: "rgba(0, 0, 0, 1)",
+                  border: "none",
+                  fontSize: "26px"
+                }}
+              />
+            )}
           </div>
-        )}
+          <div
+            style={{
+              background: "linear-gradient(black,rgba(0,0,0,.1))",
+              backgroundColor: "rgb(5,5,10)",
+              //minHeight: "150px",
+              display: "block",
+              position: "relative",
+              width: "100%",
+
+              columnCount: "3",
+              columnGap: "0"
+              //gridTemplateColumns: "1fr 1fr 1fr"
+            }}
+          >
+            {this.state.images ? (
+              this.state.images.map((image, i) => {
+                //console.log(image);
+                return (
+                  <img
+                    key={i}
+                    onClick={() =>
+                      this.setState({
+                        chosenPhoto: image,
+                        images: []
+                      })
+                    }
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      WebkitColumnBreakInside: "avoid",
+                      pageBreakInside: "avoid",
+                      breakInside: "avoid"
+                    }}
+                    src={image.src.medium}
+                    alt="error"
+                  />
+                );
+              })
+            ) : (
+              <div>nothing for this title</div>
+            )}
+          </div>
+          {pleaseNewClubname && (
+            <div style={{ color: "white" }}>
+              Please choose another {this.props.initial} title, or make it
+              elsewhere than {pleaseNewClubname}
+            </div>
+          )}
+        </form>
         {this.props.initial !== "plan" && (
           <Locate
             place_name={this.state.place_name}
@@ -1518,7 +1533,7 @@ class Make extends React.PureComponent {
             myDepartments={this.props.myDepartments}
           />
         )}
-      </form>
+      </div>
     );
   }
 }
