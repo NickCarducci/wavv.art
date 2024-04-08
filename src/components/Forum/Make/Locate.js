@@ -89,7 +89,7 @@ class Locate extends React.Component {
       { addressQuery, predictions, communities } = this.state;
     const numberEntered = /^[\d]/;
     const space = " ";
-    console.log("communities", communities);
+    //console.log("communities", communities);
     return (
       <div>
         {place_name || chosenCommunity ? (
