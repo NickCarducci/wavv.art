@@ -225,7 +225,11 @@ class SwitchCity extends React.Component {
         />
 
         <div
-          onClick={() => this.setState({ openBuyer: !this.state.openBuyer })}
+          onClick={() =>
+            this.setState({ openBuyer: !this.state.openBuyer }, () =>
+              window.scrollTo(0, 0)
+            )
+          }
           style={{
             fontSize: "30px",
             color: "white",
