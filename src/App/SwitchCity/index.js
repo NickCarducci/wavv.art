@@ -228,6 +228,7 @@ class SwitchCity extends React.Component {
           onClick={() =>
             this.setState({ openBuyer: !this.state.openBuyer }, () => {
               window.scrollTo({ top: 0, left: 0 });
+              window.scroll(0, 0);
               document.body.scrollTop = document.documentElement.scrollTop = 0;
               //document.body.scrollTop(0);
             })
