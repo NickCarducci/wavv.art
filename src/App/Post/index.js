@@ -1014,7 +1014,7 @@ class Post extends React.Component {
                   >
                     <input
                       type="file"
-                      onChange={(event) => {
+                      onChange={async (event) => {
                         // Update the state
                         // const fileReader = new window.FileReader();
                         var selectedFile = event.target.files[0];
@@ -1023,7 +1023,7 @@ class Post extends React.Component {
                           var blob;
                           var url;
                           if (
-                            selectedFile.type.includes("video") ||
+                            //selectedFile.type.includes("video") ||
                             selectedFile.type.includes("image") ||
                             selectedFile.type.includes("application/pdf")
                           ) {
@@ -1069,7 +1069,8 @@ class Post extends React.Component {
                                     pathReference + `/${selectedFile.name}`
                                   );
                                   const url = await getDownloadURL(itemRef);
-                                  updateDoc(
+                                  //if (!selectedFile.type.includes("image"))
+                                  return updateDoc(
                                     doc(
                                       firestore,
                                       parent.collection,
@@ -1079,17 +1080,58 @@ class Post extends React.Component {
                                       videos: arrayUnion(url)
                                     }
                                   ).catch((e) => console.log(e.message));
+
+                                  this.deepai = window.deepai;
+                                  this.deepai.setApiKey(
+                                    "fbc3602b-4af4-4b5e-81fb-8a4407b75eab"
+                                  );
+                                  var output = await this.deepai
+                                    .callStandardApi("content-moderation", {
+                                      image: url
+                                    })
+                                    .catch((e) => console.log("deepai: ", e));
+                                  var result = output.output;
+                                  if (result) {
+                                    console.log(result);
+                                    console.log(
+                                      "deepai nudity score " + result.nsfw_score
+                                    );
+                                    if (result.nsfw_score > 0.7) {
+                                      window.alert(
+                                        "we cannot store this video, it does not pass our nudity test"
+                                      );
+                                      //move to pouchdb
+                                      //delete from cloud storage
+                                    } else if (result.nsfw_score) {
+                                      updateDoc(
+                                        doc(
+                                          firestore,
+                                          parent.collection,
+                                          parent.id
+                                        ),
+                                        {
+                                          videos: arrayUnion(url)
+                                        }
+                                      ).catch((e) => console.log(e.message));
+                                    } else {
+                                      return window.alert(result);
+                                    }
+                                  } else {
+                                    return window.alert(
+                                      "file moderation analysis error, will not add ageAppropriate tag"
+                                    );
+                                  }
                                 })
                                 .catch((err) => console.log(err.message));
                             };
                             getDownloadURL(itemRef)
                               .then((url) => {
                                 window.alert(
-                                  `capture exists with this name "${x.title}"` +
+                                  `capture exists with this name "${selectedFile.name}"` +
                                     ` in "${this.props.user.username}/personalCaptures/," Please rename this`
                                 );
                                 console.log(
-                                  `capture exists with this name "${x.title}"` +
+                                  `capture exists with this name "${selectedFile.name}"` +
                                     ` in "${this.props.user.username}/personalCaptures/," Please rename this`
                                 );
                               })
@@ -1101,7 +1143,7 @@ class Post extends React.Component {
                                     folder: pathReference,
                                     type: selectedFile.type
                                   });
-                                } else return console.log(error.code);
+                                } else return console.log(error);
                               });
                           } else
                             return window.alert(
