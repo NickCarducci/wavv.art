@@ -605,11 +605,10 @@ class Find extends React.Component {
           ) : (
             hello.map((x) => {
               var thiscity = null;
+              const place_name = x.place_name && x.place_name.split(",")[1];
               thiscity =
-                x.place_name.split(",")[1] &&
-                stateCity.find((y) =>
-                  x.place_name.split(",")[1].includes(y.name)
-                );
+                place_name &&
+                stateCity.find((y) => place_name.includes(y.name));
 
               return (
                 <div
