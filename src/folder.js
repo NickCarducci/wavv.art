@@ -171,7 +171,8 @@ class Folder extends React.Component {
     this.state = {
       onroot: false,
       openWhen: "new",
-      issues: []
+      issues: [],
+      forumOpen: false
     };
     this.justthisonce = null;
   }
@@ -898,6 +899,41 @@ class Folder extends React.Component {
           current={current}
           current1={current1}
         />
+        <div
+          onClick={() => this.setState({ tutorial: !this.state.tutorial })}
+          style={{
+            display: !this.state.tutorial ? "block" : "none",
+            zIndex: "1",
+            top: "0px",
+            position: "fixed",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0,0,20,.7)"
+          }}
+        >
+          <div
+            style={{
+              top: "56px",
+              color: "white",
+              position: "absolute",
+              fontSize: this.props.width < 300 ? "16px" : "26px",
+              lineHeight: this.props.width < 300 ? "16px" : ""
+            }}
+          >
+            &nbsp;&nbsp;&nbsp;^ Create a community here
+          </div>
+          <div
+            style={{
+              right: "0px",
+              top: "90px",
+              color: "white",
+              position: "absolute",
+              fontSize: this.props.width < 300 ? "16px" : "26px"
+            }}
+          >
+            Open the forum here ^&nbsp;&nbsp;&nbsp;
+          </div>
+        </div>
         {this.state.eventsAt && false && (
           <EventsAt
             eventsAt={this.state.eventsAt}
