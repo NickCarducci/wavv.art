@@ -134,7 +134,7 @@ class Foundation extends React.Component {
       entityId: null,
       tilesMapOpen: null,
       tileChosen: "event",
-      forumOpen: true
+      forumOpen: false
       //zoomChangedRecently:false
     };
 
@@ -1049,7 +1049,7 @@ class Foundation extends React.Component {
     console.log("suggesting " + item.place_name + " " + item.center);
     //this.props.sustainPath(item.place_name, true);
 
-    this.setState({ forumOpen: true });
+    //this.setState({ forumOpen: true });
 
     const city = item.place_name;
     const cityapi = city.split(",")[0]; //.replace(/ /g, "_");
@@ -1082,7 +1082,7 @@ class Foundation extends React.Component {
         console.log(
           "hard-coded city found: " + newCityToQuery + " " + found.center
         );
-        this.setState({ forumOpen: true });
+        //this.setState({ forumOpen: true });
 
         const cityapi = found.place_name.split(",")[0]; //.replace(/[, ]+/g, "_");
         //const stateapi = "California";
