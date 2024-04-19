@@ -404,7 +404,7 @@ class BuyCommunity extends React.Component {
                 {/*create a community this.state.openDescript ? null : "HOST YOUR OWN MAP"*/}
                 Continue
               </p>
-              <p>
+              <div>
                 {this.state.justForum ? (
                   <div
                     style={{
@@ -477,7 +477,7 @@ class BuyCommunity extends React.Component {
                     </span>
                   </span>
                 )}
-              </p>
+              </div>
             </div>
           ) : this.state.continueNewComm ? null : (
             <span>
