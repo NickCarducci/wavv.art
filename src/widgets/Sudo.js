@@ -675,7 +675,11 @@ class FIREBASE_SUDO extends React.Component {
                   <span onClick={() => this.props.getUserInfo()}>You</span>
                   {space}must log in to view {bumpedFrom}
                 </h1>
-                <h2>standard rates apply</h2>
+                <h2 style={{ color: "rgb(20,20,20)" }}>
+                  standard rates apply
+                  <br />
+                  to login, you must be {">"}13
+                </h2>
               </div>
               <div
                 style={{
@@ -955,3 +959,4 @@ export default React.forwardRef((props, ref) => (
       }}*/
 //{...props}/>
 //});
+
