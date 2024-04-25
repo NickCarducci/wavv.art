@@ -135,7 +135,7 @@ class VoteModule extends React.Component {
           .catch(standardCatch);
       }
       var newVote = {};
-      const eitherAuthorId = user.publicAuthorId ? auth.uid : abstractAuthorId;
+      const eitherAuthorId = auth.uid; //user.publicAuthorId ? auth.uid : abstractAuthorId;
       newVote[up ? "upvotes" : "downvotes"] = arrayUnion(eitherAuthorId);
       if (!newVote.voted || !newVote.voted.includes(auth.uid))
         newVote.voted = arrayUnion(auth.uid);
@@ -676,4 +676,3 @@ class VoteModule extends React.Component {
   }
 }
 export default VoteModule;
-
