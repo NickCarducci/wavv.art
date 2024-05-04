@@ -102,10 +102,12 @@ class Words extends React.Component {
         style={{
           width: "calc(100% - 112px)",
           height: "56px",
-          boxShadow: "-5px 0px 10px 2px rgba(30,20,230,.4)",
+          boxShadow: focusSuggest ? "-5px 0px 10px 2px rgba(30,20,230,.4)" : "",
           paddingLeft: "4px",
           borderBottomRightRadius: "20px",
-          backgroundColor: `rgba(30,20,230,${subForum ? ".7" : "1"})`
+          backgroundColor: focusSuggest
+            ? `rgba(30,20,230,${subForum ? ".7" : "1"})`
+            : ""
         }}
         onSubmit={(e) => e.preventDefault()}
       >
@@ -114,13 +116,15 @@ class Words extends React.Component {
           onClick={this.props.focusSearching}
           onFocus={this.props.focusSearching}
           //onBlur={this.props.blurSearching}
-          className="editcolorheader"
+          className={focusSuggest ? "editcolorheader" : ""}
           style={{
-            backgroundColor: !focusSuggest ? "rgba(30,20,30)" : "",
+            backgroundColor: focusSuggest
+              ? "rgba(30,20,30)"
+              : "rgba(200,200,200,0)",
             userSelect: "text",
             display: "flex",
             position: "relative",
-            color: !focusSuggest ? "white" : "blue",
+            color: !focusSuggest ? "white" : "grey",
             fontSize: "24px",
             width: "calc(100%)",
             border: "0px solid grey",
