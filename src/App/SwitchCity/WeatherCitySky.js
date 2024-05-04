@@ -173,7 +173,9 @@ class WeatherCitySky extends React.Component {
             <BigSnow style={large} />
           ) : null}
           {[
+            "New Orleans, Louisiana, United States",
             "Houston, Texas, United States",
+            "Costa Mesa, California, United States",
             "San Francisco, California, United States",
             "Santa Barbara, California, United States",
             "Atlantic City, New Jersey, United States"
