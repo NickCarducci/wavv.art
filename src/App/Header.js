@@ -498,6 +498,7 @@ class Header extends React.Component {
           </div>
         ) : (
           <CityGif
+            city={this.props.city}
             forumOpen={forumOpen}
             globeChosen={globeChosen}
             community={community}
@@ -862,4 +863,3 @@ export default Header;
           }}
         />
  */
-
