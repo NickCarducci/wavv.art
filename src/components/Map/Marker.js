@@ -83,21 +83,6 @@ class Marker extends BaseControl {
         onMouseEnter={() => this.setState({ showInfos: true })}
         onMouseLeave={() => this.setState({ showInfos: false })}
       >
-        {!isNaN(ch) && (
-          <div
-            style={{
-              display: "flex",
-              backgroundColor: "white",
-              borderRadius: "50px",
-              transform: "translate(170%,100%)",
-              fontSize: "14px",
-              position: "absolute",
-              border: `3px ${timecolor} solid`
-            }}
-          >
-            {ch.includes(".") ? ch.split(".")[0] : ch}d
-          </div>
-        )}
         {this.state.showInfos &&
           (String(event.id).length > 10 ? (
             <div className="infowindow">
@@ -123,14 +108,52 @@ class Marker extends BaseControl {
           >
             {String(event.id).length > 10 ? (
               <img
-                style={{ boxShadow, cursor: "pointer" }}
+                style={{
+                  boxShadow,
+                  cursor: "pointer",
+                  height:
+                    chopped < 1
+                      ? "36px"
+                      : chopped < 2
+                      ? "33px"
+                      : chopped < 3
+                      ? "30px"
+                      : "27px",
+                  width:
+                    chopped < 1
+                      ? "36px"
+                      : chopped < 2
+                      ? "33px"
+                      : chopped < 3
+                      ? "30px"
+                      : "27px"
+                }}
                 className="mapicons"
                 src={photo1}
                 alt="error"
               />
             ) : (
               <img
-                style={{ boxShadow, cursor: "pointer" }}
+                style={{
+                  boxShadow,
+                  cursor: "pointer",
+                  height:
+                    chopped < 1
+                      ? "36px"
+                      : chopped < 2
+                      ? "33px"
+                      : chopped < 3
+                      ? "30px"
+                      : "27px",
+                  width:
+                    chopped < 1
+                      ? "36px"
+                      : chopped < 2
+                      ? "33px"
+                      : chopped < 3
+                      ? "30px"
+                      : "27px"
+                }}
                 className="mapicons"
                 src={
                   "https://www.dropbox.com/s/s8qd8boe74trqv1/edmtrain.png?raw=1"
@@ -143,9 +166,32 @@ class Marker extends BaseControl {
         ) : (
           "error"
         )}
+        {!isNaN(ch) && (
+          <div
+            style={{
+              display: "flex",
+              backgroundColor: "white",
+              borderRadius: "50px",
+              transform:
+                chopped < 1
+                  ? "translate(140%,100%)"
+                  : chopped < 2
+                  ? "translate(130%,80%)"
+                  : chopped < 3
+                  ? "translate(120%,60%)"
+                  : "translate(100%,50%)",
+              fontSize: "14px",
+              position: "absolute",
+              border: `3px ${timecolor} solid`
+            }}
+          >
+            {ch.includes(".") ? ch.split(".")[0] : ch}d
+          </div>
+        )}
       </div>
     );
   }
 }
 
 export default Marker;
+
