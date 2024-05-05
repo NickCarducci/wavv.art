@@ -128,7 +128,8 @@ class Words extends React.Component {
             fontSize: "24px",
             width: "calc(100%)",
             border: "0px solid grey",
-            transition: ".3s ease-in"
+            transition: ".3s ease-in",
+            textDecoration: !focusSuggest ? "underline" : ""
           }}
           placeholder={
             this.props.globeChosen
@@ -863,3 +864,4 @@ export default Header;
           }}
         />
  */
+
