@@ -45,7 +45,7 @@ class Section extends React.Component {
           style={{
             borderBottomRightRadius: "5px",
             padding: openCal ? "0px" : "5px",
-            backgroundColor: `rgba(20,20,20,${
+            backgroundColor: `rgba(250,250,250,${
               this.state.hoverCatalogOption ? ".9" : ".6"
             })`,
             display: "flex",
