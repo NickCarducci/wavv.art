@@ -592,6 +592,9 @@ class Mapbox extends React.Component {
           unique.filter((y) => y === id);
           return first;
         });
+      mapit = mapit.sort((a, b) => {
+        return a - b; //return new Date(a.date).getTime() - new Date(b.date).getTime();
+      });
       inLot = mapThis.filter((x) => x && x.place_name === this.state.tellMeAll);
     }
     var communityIds = [];
@@ -1280,16 +1283,15 @@ class Mapbox extends React.Component {
         <div
           //group-cluster; opened
           style={{
+            top: "56px",
             zIndex: "6",
             display: this.state.tellMeAll !== "" ? "flex" : "none",
-            position: "fixed",
+            position: "absolute",
             flexDirection: "column",
+            height: "calc(100% - 56px)",
             width: "100%",
-            height: "100%",
             backgroundColor: "white",
-            bottom: "0px",
             alignItems: "center",
-            justifyContent: "center",
             overflowY: "auto",
             overflowX: "hidden"
           }}
