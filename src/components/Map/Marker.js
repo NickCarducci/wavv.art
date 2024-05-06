@@ -8,8 +8,8 @@ import { canIView } from "../../data";
 class Marker extends BaseControl {
   state = { showInfos: false, inside: false, eventsWithSameAddress: [] };
   percentToColor(weight) {
-    var color1 = [250, 250, 250];
-    var color2 = [0, 136, 143];
+    var color2 = [0, 180, 200];
+    var color1 = [0, 86, 93];
     var w1 = weight;
     var w2 = 1.4 - w1;
     var timecolor = [
@@ -28,7 +28,7 @@ class Marker extends BaseControl {
       ? new Date(this.props.event.date).getTime() / 1000
       : new Date();
     var chopped = (eventDate - today) / 86400;
-    var colorTime = chopped.toString().substr(0, 3);
+    //var colorTime = chopped.toString().substr(0, 3);
     const markerStyle = {
       position: "absolute",
       boxShadow: "#fff",
@@ -36,7 +36,7 @@ class Marker extends BaseControl {
       top: y,
       userSelect: "none"
     };
-    const timecolor = this.percentToColor(colorTime / 7);
+    const timecolor = this.percentToColor(chopped / 5);
     var goo = photo;
     var photo1 = event.chosenPhoto ? event.chosenPhoto : goo;
     var community = event.community;
@@ -194,4 +194,3 @@ class Marker extends BaseControl {
 }
 
 export default Marker;
-
