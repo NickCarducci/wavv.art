@@ -485,6 +485,8 @@ class Auth extends React.Component {
                     loaded: true
                   },
                   () => {
+                    //window.meAuth = auth;
+                    //console.log(auth.uid);
                     onSnapshot(doc(firestore, "userDatas", auth.uid), (dc) => {
                       var userDatas = undefined;
                       if (dc.exists()) {
@@ -513,10 +515,14 @@ class Auth extends React.Component {
       },
       standardCatch
     );
-    if (this.props.pathname === "/login") {
-      return this.setState({ sudo: true });
-    } else {
-      this.setState({ sudo: false });
+  };
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.pathname !== this.props.pathname) {
+      if (this.props.pathname === "/login") {
+        return this.setState({ sudo: true });
+      } else {
+        this.setState({ sudo: false });
+      }
     }
   };
   responseCallback = () => {
@@ -875,7 +881,7 @@ class Auth extends React.Component {
             setAuth={(auth) =>
               this.setState(auth, () => this.pa.current.click())
             }
-            meAuth={window.meAuth}
+            meAuth={meAuth}
             getUserInfo={
               () => {
                 this.gui.current.click();
