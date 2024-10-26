@@ -673,11 +673,7 @@ class Auth extends React.Component {
     //console.log(this.state.users);
     return (
       <div>
-        <div
-          style={{
-            display: this.state.sudo
-          }}
-        >
+        <div>
           <div
             style={{
               opacity:
@@ -707,7 +703,10 @@ class Auth extends React.Component {
           </div>
           <div
             style={{
-              display: this.state.auth === undefined ? "block" : "none",
+              display:
+                this.state.sudo && this.state.auth === undefined
+                  ? "block"
+                  : "none",
               color: "white",
               cursor: "pointer",
               padding: "10px",
@@ -715,6 +714,8 @@ class Auth extends React.Component {
               backgroundColor: "rgba(0,0,0,.8)"
             }}
           >
+            <h4>Thumbprint "Social Calendar"</h4>
+            <br />
             {ctry && (
               <div style={{ display: "flex", justifyContent: "center" }}>
                 {ctry.country !== "US" && (
@@ -1023,4 +1024,3 @@ class Auth extends React.Component {
 }
 
 export default Auth;
-
