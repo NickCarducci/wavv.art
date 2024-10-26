@@ -512,28 +512,11 @@ class Auth extends React.Component {
       },
       standardCatch
     );
-    onSnapshot(collection(firestore, "events"), (querySnapshot) => {
-      this.setState({
-        events: querySnapshot.docs.map((dc) => {
-          return { id: dc.id, ...dc.data() };
-        })
-      });
-    });
-
-    onSnapshot(
-      query(
-        collection(firestore, "leaders"),
-        orderBy("eventsAttended", "desc"),
-        limit(5)
-      ),
-      (querySnapshot) => {
-        this.setState({
-          leaders: querySnapshot.docs.map((dc) => {
-            return { id: dc.id, ...dc.data() };
-          })
-        });
-      }
-    );
+    if (this.props.pathname === "/login") {
+      return this.setState({ sudo: true });
+    } else {
+      this.setState({ sudo: false });
+    }
   };
   responseCallback = () => {
     this.promptCode(this.state.phone, true);
@@ -692,7 +675,7 @@ class Auth extends React.Component {
       <div>
         <div
           style={{
-            display: this.props.pathname !== "/leaderboard" ? "block" : "none"
+            display: this.state.sudo
           }}
         >
           <div
