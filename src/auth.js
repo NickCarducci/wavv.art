@@ -373,7 +373,7 @@ class Auth extends React.Component {
             exists
               ? console.log("users[" + user.username + "]", r.user.uid)
               : console.log("users[" + c + "]", r.user.uid);
-            if (exists) return null//this.props.getUserInfo();
+            if (exists) return this.props.navigate("/");//null//this.props.getUserInfo();
             for (let i = 1; i < c.length + 1; i++) {
               usernameAsArray.push(c.substring(0, i));
             }
@@ -406,6 +406,7 @@ class Auth extends React.Component {
                       );
                       window.recaptchaId = "";
                       this.setState({authError:""})
+                      this.props.navigate("/");
                     })
                     .catch((e) => console.log(e));
                   //this.promptCode
