@@ -635,7 +635,7 @@ class Folder extends React.Component {
       });
     return !item ? null : (
       <div style={{ width: "100%", position: "relative" }}>
-        {this.state.sudo && (
+        {this.state.sudo && false && (
           <Sudo
             ref={{ current: {} }}
             forbiddenUsernames={forbiddenUsernames}
