@@ -485,7 +485,7 @@ class Auth extends React.Component {
                     loaded: true
                   },
                   () => {
-                    //window.meAuth = auth;
+                    window.meAuth = auth;
                     //console.log(auth.uid);
                     onSnapshot(doc(firestore, "userDatas", auth.uid), (dc) => {
                       var userDatas = undefined;
@@ -954,7 +954,7 @@ class Auth extends React.Component {
             againBackDocs={this.againBackDocs}
             tickets={this.state.tickets}
             myStuff={myStuff}
-            auth={this.state.lastAuth}
+            auth={this.state.auth}
             user={this.state.user}
             //
             iAmCandidate={this.state.iAmCandidate}
@@ -1031,3 +1031,4 @@ class Auth extends React.Component {
 }
 
 export default Auth;
+
