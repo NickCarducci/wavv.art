@@ -383,6 +383,7 @@ class VoteModule extends React.Component {
               >
                 <div
                   style={{
+                    zIndex: "1",
                     padding: "2px",
                     borderRadius: "4px",
                     borderTopLeftRadius: "2px",
@@ -398,7 +399,8 @@ class VoteModule extends React.Component {
                     height: "min-content"
                   }}
                 >
-                  {downvotesNumber}&nbsp;{percentageDown * 100}%
+                  {/*downvotesNumber*/}
+                  {percentageDown * 100}%
                 </div>
                 <div
                   style={{
@@ -436,7 +438,8 @@ class VoteModule extends React.Component {
                     height: "min-content"
                   }}
                 >
-                  {upvotesNumber}&nbsp;{percentageUp * 100}%
+                  {/*upvotesNumber*/}
+                  {percentageUp * 100}%
                 </div>
                 <div
                   style={{
