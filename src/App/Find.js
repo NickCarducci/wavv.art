@@ -282,9 +282,8 @@ class Find extends React.Component {
       margin: "4px 0px"
     };
 
-    let hello = (this.state.favorites
-      ? favoriteCities
-      : filteredCommunities
+    let hello = (
+      this.state.favorites ? favoriteCities : filteredCommunities
     ).filter(
       (x) =>
         !this.state.favorites ||
@@ -608,6 +607,7 @@ class Find extends React.Component {
               const place_name = x.place_name && x.place_name.split(",")[1];
               thiscity =
                 place_name &&
+                !x.isCommunity &&
                 stateCity.find((y) => place_name.includes(y.name));
 
               return (
@@ -813,3 +813,4 @@ class Find extends React.Component {
   }
 }
 export default React.forwardRef((props, ref) => <Find fwd={ref} {...props} />);
+
