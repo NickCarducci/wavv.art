@@ -198,11 +198,6 @@ class Folder extends React.Component {
     }
   };
   checkPathname = async (pathname) => {
-    if (pathname === "/login") {
-      return this.setState({ sudo: true });
-    } else {
-      this.setState({ sudo: false });
-    }
     //this.props.chosenPost && this.props.helper();
     const user = (isProfile, id) => {
       //this.props.loadGreenBlue("getting profile of " + id);
@@ -333,12 +328,12 @@ class Folder extends React.Component {
             const letterEntered = /^[\W\D]/;
             if (letterEntered.test(id) && id.includes(",")) {
               console.log("with commas, probably city " + id);
+              this.props.setData({
+                community: null,
+                city: id,
+                isProfile: null
+              });
               if (this.state.newCityToQuery === id) {
-                this.props.setData({
-                  community: null,
-                  city: id,
-                  isProfile: null
-                });
                 this.setState(
                   {
                     newCityToQuery: null
@@ -1224,4 +1219,3 @@ class Folder extends React.Component {
 export default React.forwardRef((props, ref) => (
   <Folder {...props} {...ref.current} />
 ));
-
