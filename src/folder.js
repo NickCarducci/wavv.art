@@ -322,7 +322,8 @@ class Folder extends React.Component {
               city: resComm.place_name,
               isProfile: null
             });
-            this.props.fetchCommEvents(resComm, "event");
+            //this.props.fetchCommEvents(resComm, "event");
+            this.props.fetchEvents(resComm.center, 15, resComm.city, "event");
             this.props.fetchCommForum(resComm, this.props.commtype);
           } else {
             const letterEntered = /^[\W\D]/;
@@ -1219,3 +1220,4 @@ class Folder extends React.Component {
 export default React.forwardRef((props, ref) => (
   <Folder {...props} {...ref.current} />
 ));
+
