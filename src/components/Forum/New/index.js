@@ -305,6 +305,7 @@ class NewForum extends React.Component {
           />
         ) : (
           <Make
+            community={this.props.community}
             allow={allow}
             optionMake={this.state.optionMake}
             recipients={this.props.recipients}
