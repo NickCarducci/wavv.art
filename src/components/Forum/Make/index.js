@@ -369,7 +369,7 @@ class Make extends React.PureComponent {
               ticketCategories: this.state.ticketCategories
             });
         this.setState({ loadingSubmitted: false, success: true }, () => {
-          this.props.navigate("/");
+          //this.props.navigate("/");
           setTimeout(() => this.setState({ success: false }), 5000);
         });
       })
@@ -758,7 +758,6 @@ class Make extends React.PureComponent {
           onSubmit={(e) => {
             e.preventDefault();
             //e.stopPropagation();
-            console.log("submit");
             const chosenPhoto = this.state.fileUrl
               ? this.state.fileUrl
               : this.state.chosenPhoto;
@@ -771,7 +770,7 @@ class Make extends React.PureComponent {
               this.props.initial === "plan"
             ) {
               var title = this.state.title;
-              if (this.props.initial !== "plan" && !this.state.checkIn)
+              if (this.props.initial !== "plan" && !this.state.checkIn && typer)
                 return this.setState({
                   images: [],
                   checkIn: true,
@@ -792,8 +791,8 @@ class Make extends React.PureComponent {
               if (this.props.initial === "plan") {
                 return this.planSubmit();
               }
-              if (this.state.communityId)
-                return checkComms(this.state.communityId);
+              if (this.state.community.id)
+                return checkComms(this.state.community.id);
               if (this.state.place_name)
                 return citycheck(this.state.place_name);
               console.log("no location");
@@ -1478,7 +1477,8 @@ class Make extends React.PureComponent {
           }}
         >
           {(this.state.place_name || this.props.initial === "plan") &&
-            this.state.checkIn && (
+            this.state.checkIn &&
+            typer && (
               <div
                 style={{
                   display: "flex",
@@ -1500,7 +1500,7 @@ class Make extends React.PureComponent {
                   borderRadius: "20px"
                 }}
               >
-                {typer ? "Choose a type" : "Submit"}
+                Choose a type
               </div>
             )}
         </div>
@@ -1587,3 +1587,4 @@ export default Make;
     &times;
   </div>
 ) : null}*/
+
