@@ -337,10 +337,7 @@ class Make extends React.PureComponent {
       title: this.state.title,
       titleAsArray: array,
       body: this.state.body,
-      chosenPhoto:
-        this.state.file ||
-        this.state.chosenPhoto.src
-          .medium /*{
+      chosenPhoto: this.state.file || this.state.chosenPhoto.src.medium /*{
         large: this.state.chosenPhoto.src.large,
         medium: this.state.chosenPhoto.src.medium,
         small: this.state.chosenPhoto.src.small,
@@ -576,7 +573,7 @@ class Make extends React.PureComponent {
         : d.getMonth() + 1 + `${sh + d.getDate() + sh + d.getFullYear()}`;
     };
     const space = " ",
-      namecheck = (city, coll) => {
+      citynamecheck = (city, coll) => {
         //const firestore = firebase.firestore();
         console.log(city, coll);
         let empty = [];
@@ -633,7 +630,7 @@ class Make extends React.PureComponent {
 
                 const colle = entityTypeChosen ? "entity" : "event";
                 if (!entityTypeChosen) return this.makeEntityEvent(colle);
-                namecheck(prediction.place_name, this.props.initial);
+                citynamecheck(prediction.place_name, this.props.initial);
               }
             );
           })
@@ -653,9 +650,9 @@ class Make extends React.PureComponent {
           "page",
           "venue"
         ].includes(this.props.initial);
-        if (isEntity)
+        if (!isEntity)
           //housing,job,event
-          return this.makeEvent(this.props.initial);
+          return this.makeEntityEvent(colle);
         getDocs(
           query(
             collection(firestore, "entity"),
@@ -672,7 +669,10 @@ class Make extends React.PureComponent {
               console.log("empty");
               //empty.push("empty");
               //if (empty.length === 5) {
-              return citycheck(this.state.place_name);
+
+              const colle = entityTypeChosen ? "entity" : "event";
+              this.makeEntityEvent(colle);
+              //return citycheck(this.state.place_name);
               //} else return null;
             } else {
               querySnapshot.docs.forEach((doc) => {
@@ -757,11 +757,13 @@ class Make extends React.PureComponent {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            e.stopPropagation();
+            //e.stopPropagation();
+            console.log("submit");
             const chosenPhoto = this.state.fileUrl
               ? this.state.fileUrl
               : this.state.chosenPhoto;
-            if (this.props.initial !== "plan" && !chosenPhoto) return null;
+            if (this.props.initial !== "plan" && !chosenPhoto)
+              return console.log("choose photo");
 
             if (
               this.state.place_name ||
@@ -1381,6 +1383,30 @@ class Make extends React.PureComponent {
               elsewhere than {pleaseNewClubname}
             </div>
           )}
+          {this.props.allow && (
+            <button
+              style={{
+                transform: "translateY(40px)",
+                borderRadius: "12px",
+                bottom: "0px",
+                userSelect: "none",
+                display: "flex",
+                position: "absolute",
+                right: "5px",
+                padding: "0px 10px",
+                margin: "10px",
+                height: "36px",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "blue",
+                color: "white",
+                zIndex: "6"
+              }}
+              type="submit"
+            >
+              Send
+            </button>
+          )}
         </form>
         {this.props.initial !== "plan" && (
           <Locate
@@ -1478,30 +1504,6 @@ class Make extends React.PureComponent {
               </div>
             )}
         </div>
-        {this.props.allow && (
-          <button
-            style={{
-              transform: "translateY(40px)",
-              borderRadius: "12px",
-              bottom: "0px",
-              userSelect: "none",
-              display: "flex",
-              position: "absolute",
-              right: "5px",
-              padding: "0px 10px",
-              margin: "10px",
-              height: "36px",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "blue",
-              color: "white",
-              zIndex: "6"
-            }}
-            type="submit"
-          >
-            Send
-          </button>
-        )}
         {this.state.checkIn && (
           <Confirm
             initial={this.props.initial}
