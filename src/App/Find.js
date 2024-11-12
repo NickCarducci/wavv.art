@@ -607,7 +607,7 @@ class Find extends React.Component {
               const place_name = x.place_name && x.place_name.split(",")[1];
               thiscity =
                 place_name &&
-                !x.isCommunity &&
+                //!x.isCommunity &&
                 stateCity.find((y) => place_name.includes(y.name));
 
               return (
