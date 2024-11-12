@@ -278,8 +278,7 @@ class Foundation extends React.Component {
           basemap: new Basemap({
             baseLayers: [
               new TileLayer({
-                url:
-                  "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/VintageShadedRelief/MapServer"
+                url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/VintageShadedRelief/MapServer"
               })
             ]
           }),
@@ -495,7 +494,7 @@ class Foundation extends React.Component {
   tileChanger = (tileOrType, changeCollection) => {
     //console.log("S");
     const map = (tileOrType, community, center, distance, city) => {
-      if (community) {
+      if (false && community) {
         this.props.fetchCommEvents(community, tileOrType);
       } else this.props.fetchEvents(center, distance, city, tileOrType);
     };
@@ -1113,14 +1112,8 @@ class Foundation extends React.Component {
       this.setState({ forumOpen: this.props.forumOpen });
     }
 
-    const {
-      newCityToQuery,
-      item,
-      dropToCheck,
-      pathname,
-      auth,
-      chats
-    } = this.props;
+    const { newCityToQuery, item, dropToCheck, pathname, auth, chats } =
+      this.props;
     /*if (this.props.scrollTop !== prevProps.scrollTop) {
       this.setState({
         switchCityOpen: this.state.switchCityOpen
